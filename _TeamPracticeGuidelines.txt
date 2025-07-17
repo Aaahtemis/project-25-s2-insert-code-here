@@ -1,0 +1,15 @@
+copy; dont cut code into a new file
+clear and orginised folders
+focused methods
+↑make sure to make methods for repeating code
+testing expected and unexpected inputs
+
+For the love of god make efficent code
+
+consistent and clear naming conventions (case/variable capitalisation) and clear name choices
+
+clip what code you are working on and send in teams
+talk about conflicts - teams/class
+
+Code Review
+↑ put a message in the chat when you need a code review

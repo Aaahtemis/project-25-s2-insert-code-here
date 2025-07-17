@@ -1,0 +1,2 @@
+move enemy choices stuff to it's own method & add efficency
+adjust random ranges globaly

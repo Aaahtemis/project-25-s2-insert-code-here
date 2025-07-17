@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
+
 - Remove prompt to enter console into fullscreen after user has pressed enter.
-
-
-
+- Camping Section is bugged after going through option 1. Doesn't allow for input and gets stuck in gamble loop.
 - In Main Menu when you press a letter or spacebar twice it goes into the rest screen instead of letting the user know its an invalid input
-=======
 
 
 issues with navigating areas & saving data
@@ -12,9 +9,8 @@ issues with saving answers and preventing the user from making a different choic
 doesn't remove the option or present a different outcome when returning to action
 no consistent HUD or option selection
 one document
-
-
-
+consistency in style
+appropriate method and file separation
 
 
 current issues:
@@ -45,6 +41,8 @@ current issues:
 
 
 
+- you get attacked if you choose to close the item menu
+-there is no option to leave combat
+-if you enter the item menu you will always be in the item menu when it rotates back to you
+-if you enter the name of the enemy instead of a number, instead of attacking the first instance of an enemy it reads as unaccepted and proceeds to enemy turn
 
-
->>>>>>> Stashed changes
