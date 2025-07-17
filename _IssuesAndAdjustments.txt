@@ -1,5 +1,50 @@
+<<<<<<< Updated upstream
 - Remove prompt to enter console into fullscreen after user has pressed enter.
 
 
 
 - In Main Menu when you press a letter or spacebar twice it goes into the rest screen instead of letting the user know its an invalid input
+=======
+
+
+issues with navigating areas & saving data
+issues with saving answers and preventing the user from making a different choice
+doesn't remove the option or present a different outcome when returning to action
+no consistent HUD or option selection
+one document
+
+
+
+
+
+current issues:
+    an issue in the toys section #13
+    the potions in the toys section weren't added to the inventory when it said they were granted.
+
+    Better combat ui #12
+    The ui for combat is basic and simple, and when you kill an enemy the ui for that breaks.
+
+    Make options more obvious #11
+    When in or out of combat, sometimes what you can, or should do isn't the obvious, say in combat, some people didn't see they had to use the numbers to select enemies, also some people didn't see the player health and stamina.
+
+    Make options more obvious #11
+    When in or out of combat, sometimes what you can, or should do isn't the obvious, say in combat, some people didn't see they had to use the numbers to select enemies, also some people didn't see the player health and stamina.
+
+    Skipping turns when in combat #10
+    When people are in combat and waiting for everything to happen, they press enter a couple of times to try and speed things up, which doesn't but then it's like they pressed enter while at the input state, making them press enter and skipping pass the combat, losing their turn. Because of this, the combat also takes a while.
+
+    extras/ things to add later on #4
+    extras
+    1-currency
+    2-gambling
+    3-bribery
+    4-riddles
+    5-items for rooms
+    rooms -
+    cooking , kitchen , food
+
+
+
+
+
+>>>>>>> Stashed changes
