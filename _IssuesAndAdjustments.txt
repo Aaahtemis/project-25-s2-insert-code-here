@@ -1,0 +1,1 @@
+- Remove prompt to enter console into fullscreen after user has pressed enter.
