@@ -1,5 +1,5 @@
 - Remove prompt to enter console into fullscreen after user has pressed enter.
-
+- Camping Section is bugged after going through option 1. Doesn't allow for input and gets stuck in gamble loop.
 
 
 - In Main Menu when you press a letter or spacebar twice it goes into the rest screen instead of letting the user know its an invalid input
