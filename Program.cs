@@ -1,6 +1,7 @@
 ﻿using System;
-
 using System.Threading;
+using CombatSystem;
+
 namespace TeamCSFile
 {
     internal class Program
@@ -8,12 +9,8 @@ namespace TeamCSFile
 
         // The inventory amount holds how much of an item you have, the inventory name holds the name of the item.
         public static int[] InventoryAmount = { 0, 0, 0, 0 };
-
         public static string[] InventoryName = { "Baseball Cap", "Bluetooth Speaker", "Remote Control Car", "Yard Chair" }; //Maybe put these inside the inventory method
 
-        //This one is for combat
-        public static int[] CombatInventoryAmount = { 1, 1, 1, 1, 1, 1 };
-        public static string[] CombatInventoryName = { "Small Health potion", "Medium Health potion", "Large Health potion", "Small Stamina potion", "Medium Stamina potion", "Large Stamina potion" };
 
         //Random added
         public static Random rand = new Random();
@@ -266,15 +263,15 @@ namespace TeamCSFile
 
         }
 
-        static void CombatInventory()
+        static void CombatInventoryOld()
         {
             Console.Clear();
             Console.WriteLine($"Your health is {Health}HP.\nYour stamina is {Stamina}Stm");
-            for (int i = 0; i < CombatInventoryAmount.Length; i++)
+            for (int i = 0; i < Combat.inventory.Length; i++)
             {
-                if (CombatInventoryAmount[i] != 0)
+                if (Combat.inventory[i].amount != 0)
                 {
-                    Console.WriteLine($"Enter {i + 1} to use one of your {CombatInventoryAmount[i]} {CombatInventoryName[i]}s.\n");
+                    Console.WriteLine($"Enter {i + 1} to use one of your {Combat.inventory[i]} {Combat.inventory[i]}s.\n");
                 }
 
             }
@@ -293,15 +290,15 @@ namespace TeamCSFile
             switch (temp)
             {
                 case 1:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Health = Health + 25;  //Change this and the other values like this for the amount of health you want the potion to do. 
                         if (Health > 100)
                         {
                             Health = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 25 Health. You have now have {Health}HP.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -312,15 +309,15 @@ namespace TeamCSFile
                     }
                     break;
                 case 2:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Health = Health + 50;
                         if (Health > 100)
                         {
                             Health = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 50 Health. You have now have {Health}HP.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -331,15 +328,15 @@ namespace TeamCSFile
                     }
                     break;
                 case 3:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Health = Health + 100;
                         if (Health > 100)
                         {
                             Health = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 100 Health. You have now have {Health}HP.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -350,15 +347,15 @@ namespace TeamCSFile
                     }
                     break;
                 case 4:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Stamina = Stamina + 25;
                         if (Stamina > 100)
                         {
                             Stamina = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 25 Stamina. You have now have {Stamina}Stm.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -369,15 +366,15 @@ namespace TeamCSFile
                     }
                     break;
                 case 5:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Stamina = Health + 50;
                         if (Stamina > 100)
                         {
                             Stamina = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 50 Stamina. You have now have {Stamina}Stm.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -388,15 +385,15 @@ namespace TeamCSFile
                     }
                     break;
                 case 6:
-                    if (CombatInventoryAmount[temp - 1] > 0)
+                    if (Combat.inventory[temp - 1].amount > 0)
                     {
-                        Console.WriteLine($"You use one of your {CombatInventoryName[temp - 1]}s");
+                        Console.WriteLine($"You use one of your {Combat.inventory[temp-1].name}s");
                         Stamina = Stamina + 100;
                         if (Stamina > 100)
                         {
                             Stamina = 100;
                         }
-                        CombatInventoryAmount[temp - 1]--;
+                        Combat.inventory[temp - 1].amount--;
                         Console.WriteLine($"You gain 100 Stamina. You have now have {Stamina}Stm.\nEnter to continue");
                         Console.ReadLine();
                     }
@@ -418,7 +415,7 @@ namespace TeamCSFile
 
         }
 
-        public static void Combat()
+        public static void CombatOld()
         {
             string[] Room1Enemies = { "Clothesliner", "Fashion Police", "Velcrofiend", "Zipperfang", "Sweater? I Hardly Know Her!" };
 
@@ -922,7 +919,7 @@ namespace TeamCSFile
 
                 else if (option == 2)  // if Items chosen
                 {
-                    CombatInventory();
+                    Inventory();
                 }
 
                 else if (option == 3)  // if Guard chosen
@@ -1709,7 +1706,8 @@ namespace TeamCSFile
             //Continue with it here for clean look.
             Console.WriteLine("Halfway to the end, something lands behind you and knocks you over.");
             Console.ReadLine();
-            Combat();
+            
+            
             Console.WriteLine($"After the battle and passing between the aisle you notice a pedestal ahead. On it is a {InventoryName[0]} on display. But it's under a glass container.");
             bool running = true;
             while (running)
@@ -1754,7 +1752,7 @@ namespace TeamCSFile
                         InventoryAmount[0]++;
                         Console.WriteLine($"But so caught up in collecting the {InventoryName[0]}, you fail to spot the enemy behind you.");
                         Console.ReadLine();
-                        Combat();
+                        Combat.Start(1);
                         Console.WriteLine("After the battle, you decided to leave.\nEnter to continue.");
                         Console.ReadLine();
                         running = false;
@@ -1861,7 +1859,7 @@ namespace TeamCSFile
                             Console.Clear();
                             Console.Write("\nYou take the torch and place it on your head. However, its light illuminates an enemy!");
                             Thread.Sleep(3000);
-                            Combat();
+                            Combat.Start(4);
                             break;
 
 
@@ -1869,7 +1867,7 @@ namespace TeamCSFile
                             Console.Clear();
                             Console.Write("\nYou choose to continue without the torch. Unfortunately, you overestimated how many carrots you eat and are hit by a sneak attack!");
                             Thread.Sleep(3000);
-                            Combat();
+                            Combat.Start(4);
                             break;
                         
 
@@ -1938,7 +1936,7 @@ namespace TeamCSFile
         static void Toys()
         {
 
-            int one6 = rand.Next(0 , CombatInventoryAmount.Length);
+            int one6 = rand.Next(0 , Combat.inventory.Length);
             int[] CombatItemCounts = new int[5];
             Random randomGenerator = new Random();
 
@@ -2022,8 +2020,8 @@ namespace TeamCSFile
             {
                 Console.WriteLine("You examine the shelves. A toy hums quietly in the back.");
                 Thread.Sleep(1000);
-                Console.WriteLine($"You find a {CombatInventoryName[one6]} resting in a toy crate and grab it.");
-                CombatInventoryAmount[one6]++;
+                Console.WriteLine($"You find a {Combat.inventory[one6]} resting in a toy crate and grab it.");
+                Combat.inventory[one6].amount++;
                 Console.WriteLine("\nPress Enter to continue.");
                 Console.ReadLine();
             }
@@ -2068,7 +2066,7 @@ namespace TeamCSFile
             {
                 Console.WriteLine("\nA toy springs to life! You face off bravely.\n");
                 Thread.Sleep(1000);
-                Combat();
+                Combat.Start(3);
             }
 
         }
@@ -2153,7 +2151,7 @@ namespace TeamCSFile
 
             void UsbCables()
             {
-                int one6 = rand.Next(0, CombatInventoryAmount.Length);
+                int one6 = rand.Next(0, Combat.inventory.Length);
                 Console.WriteLine("You approach the USB cables. ");// combat section maybe 
                 Thread.Sleep(800);
                 Console.WriteLine("Most of them are coiled neatly on hooks... except one.");
@@ -2166,24 +2164,24 @@ namespace TeamCSFile
                 Console.WriteLine("Before you can react, it whips itself into the air — and something steps out from behind the shelf!");
 
                 LeaveCase();
-                Combat();
+                Combat.Start(2);
 
                 // if you win combat you get the item
-                CombatInventoryAmount[one6] += 1; // how to fail combat and not get the item
+                Combat.inventory[one6].amount += 1; // how to fail combat and not get the item
             }
 
             void Chargers()
             {
-                int one6 = rand.Next(0, CombatInventoryAmount.Length);
+                int one6 = rand.Next(0, Combat.inventory.Length);
                 Console.WriteLine("You sort through the pile of portable chargers. One claims to charge a fridge. Another has three buttons and no ports.\n");
                 Thread.Sleep(2000);
 
                 Console.WriteLine(
-                          $"Then — jackpot! Behind a toppled charger display, you spot a {CombatInventoryName[one6]} just sitting there like a free sample.\nYou casually slip it into your inventory before anyone notices.");
+                          $"Then — jackpot! Behind a toppled charger display, you spot a {Combat.inventory[one6]} just sitting there like a free sample.\nYou casually slip it into your inventory before anyone notices.");
                 Thread.Sleep(2000);
                 Console.WriteLine("You don't see anything else useful in the area.");
 
-                CombatInventoryAmount[one6] += 1;
+                Combat.inventory[one6].amount += 1;
             }
 
             void Granny()
@@ -2251,7 +2249,7 @@ namespace TeamCSFile
             }
             void DimlyLitAisle()
             {
-                int one6 = rand.Next(0, CombatInventoryAmount.Length);
+                int one6 = rand.Next(0, Combat.inventory.Length);
                 Console.Clear();
 
                 while (!validInput)
@@ -2333,7 +2331,7 @@ namespace TeamCSFile
                         Console.WriteLine("The store is sending its enforcers.\n");
 
                         LeaveCase();
-                        Combat();
+                        Combat.Start(2);
 
                     }
                 }
