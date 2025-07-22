@@ -36,10 +36,14 @@ namespace CombatSystem
         static int Light = 20, Strong = 35; // < values are how much damage each attack does (and stamina drained?)
 
 
+        //"1  Clothing\n" +
+        //"2  Electronics\n" +
+        //"3  Toys\n" +
+        //"4  Camping\n" +
+
+
         static int health = 100;
         static int stamina = 100;
-
-
 
 
         //This one is for combat
@@ -48,11 +52,6 @@ namespace CombatSystem
 
 
 
-        //"1  Clothing\n" +
-        //"2  Electronics\n" +
-        //"3  Toys\n" +
-        //"4  Camping\n" +
-
         
 
 
@@ -60,17 +59,13 @@ namespace CombatSystem
         public static void Start(int roomNum)
         {
             
-
-
+            // flashing lights
             for (int i = 0; i < introAnim.Length; i++)
             {
                 Console.Clear();
                 Console.BackgroundColor = introAnim[i];
-                Thread.Sleep(50);
+                Thread.Sleep(200);
             }
-
-
-            // ^ Intro to combat scenario
 
 
 

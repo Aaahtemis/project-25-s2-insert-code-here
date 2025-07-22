@@ -1835,7 +1835,7 @@ namespace TeamCSFile
                         Thread.Sleep(3000);
                         Console.WriteLine("\n\nBefore you can react to this bizarre situation, a figure leaps toward you out of the water!");
                         Thread.Sleep(3000);
-                        Combat();
+                        Combat.Start(4);
                         
 
                         break;
@@ -2314,7 +2314,7 @@ namespace TeamCSFile
                         Thread.Sleep(2000);
 
                         InventoryAmount[1] += 1;
-                        Console.WriteLine($"Item acquired! You successfully found what you were looking for.\n And as a bonus you got a {CombatInventoryName[one6]}");
+                        Console.WriteLine($"Item acquired! You successfully found what you were looking for.\n And as a bonus you got a {Combat.inventory[one6].name}");
                         gotItem = true;
 
                     }
