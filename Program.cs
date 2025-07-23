@@ -1935,6 +1935,36 @@ namespace TeamCSFile
             }
         }
 
+        static int GetValidInput(int min, int max)
+        {
+            int result = 0;
+            bool validInput = false;
+
+            while (!validInput)
+            {
+                string input = Console.ReadLine();
+                try
+                {
+                    int value = Convert.ToInt32(input);
+                    if (value >= min && value <= max)
+                    {
+                        result = value;
+                        validInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Please enter a number between {min} and {max}.");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+
+            return result;
+        }
+
         static void Toys()
         {
 
