@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 using CombatSystem;
 
 
-public static class Global
+public static class Format
 {
+    public static string[] response = new string[0];
 
-    public static void DisplayTextCentre(string[] textArray)
+    public static void AddToResponse(string input)
     {
-        if (textArray.Length != 0)
+        Array.Resize(ref response, response.Length + 1);
+        response[response.Length - 1] = input;
+    }
+
+    public static void DisplayResponse()
+    {
+        if (response.Length != 0)
         {
-            for (int i = 0; i < textArray.Length; i++)
+            for (int i = 0; i < response.Length; i++)
             {
-                Console.SetCursorPosition(WindowCentre().x - textArray[i].Length / 2, WindowCentre().y + (i - textArray.Length / 2));
-                Console.WriteLine(textArray[i]);
+                Console.SetCursorPosition(WindowCentre().x - response[i].Length / 2, WindowCentre().y + (i - response.Length / 2));
+                Console.WriteLine(response[i]);
             }
         }
+        response = new string[0];
     }
 
     public static (int x, int y) WindowCentre()
@@ -28,6 +36,37 @@ public static class Global
         return (xWindowCentre, yWindowCentre);
     }
 
+    
 
+
+
+
+
+}
+
+public static class Player
+{
+    public const int maxHealth = 100;
+    public static int health = maxHealth;
+
+    public const int maxStamina = 100;
+    public static int stamina = maxStamina;
+
+
+
+
+    public static int input = -1;
+
+    public static void GetInt(int max = 3, int min = 1)
+    {
+        while(!Int32.TryParse(Console.ReadLine(), out input) && input >= min && input <= max)
+        {
+            Console.Clear();
+            Console.WriteLine(input + "is not a valid input.");
+            Console.WriteLine($"Please input a value between {min} and {max}.");
+        }
+    }
+
+    
 }
 
