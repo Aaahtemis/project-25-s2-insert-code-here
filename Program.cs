@@ -72,7 +72,16 @@ namespace TeamCSFile
              "                                                                                                                                                                                                  ",
                                                                                                                                                                                                    
             };
-
+            Random rand = new Random();
+            int room = rand.Next(1, 5);
+            Combat.Start(room);
+            room = rand.Next(1, 5);
+            Combat.Start(room);
+            room = rand.Next(1, 5);
+            Combat.Start(room);
+            room = rand.Next(1, 5);
+            Combat.Start(room);
+            return;
             Console.WriteLine("Please expand the console window.\n"+
                 "Press enter to continue");
             Console.ReadLine();

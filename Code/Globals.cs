@@ -16,18 +16,27 @@ public static class Format
         response[response.Length - 1] = input;
     }
 
-    public static void DisplayResponse()
+    public static void DisplayResponse(bool isDelayed = false)
     {
+        Console.Clear(); // might remove later.
+
         if (response.Length != 0)
         {
             for (int i = 0; i < response.Length; i++)
             {
                 Console.SetCursorPosition(WindowCentre().x - response[i].Length / 2, WindowCentre().y + (i - response.Length / 2));
-                Console.WriteLine(response[i]);
+                writeSpecial(response[i]);
+                Console.WriteLine();
+                Console.ResetColor();
             }
         }
-        response = new string[0];
+        if (!isDelayed)
+        {
+            response = new string[0];
+        }
     }
+
+
 
     public static (int x, int y) WindowCentre()
     {
@@ -36,9 +45,57 @@ public static class Format
         return (xWindowCentre, yWindowCentre);
     }
 
-    
 
 
+    public static void writeSpecial(string input)
+    {
+        string[] split = input.Split(' ');
+
+        for (int i = 0; i < split.Length; i++)
+        {
+            if (split[i][0] == '/')
+            {
+                if (split[i] == "/red")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else if (split[i] == "/blue")
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                else if (split[i] == "/green")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if (split[i] == "/yellow")
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+
+
+                else if (split[i] == "/reset")
+                {
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("!!NullColour!!");
+                    Console.ResetColor();
+                }
+            }
+            else
+            {
+                Console.Write(split[i]);
+
+                if (i != split.Length - 1)
+                {
+                    Console.Write(" ");
+                }
+
+            }
+        }
+    }
 
 
 
@@ -61,9 +118,9 @@ public static class Player
     {
         while(!Int32.TryParse(Console.ReadLine(), out input) && input >= min && input <= max)
         {
-            Console.Clear();
-            Console.WriteLine(input + "is not a valid input.");
-            Console.WriteLine($"Please input a value between {min} and {max}.");
+            Format.AddToResponse(input + "is not a valid input.");
+            Format.AddToResponse($"Please input a value between {min} and {max}.");
+            Format.DisplayResponse();
         }
     }
 
