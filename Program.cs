@@ -1773,8 +1773,8 @@ namespace TeamCSFile
 
         static void Camping()
         {
-            bool inCampingRoom = true, gambleWin = false;
-            int spinCount = 0, spin1, spin2, spin3;
+            bool inCampingRoom = true, gambleWin = false; // Loop control variables
+            int spinCount = 0, spin1, spin2, spin3; // Variables for controlling the gambling game
 
             Console.Clear();
             Console.WriteLine("\nYou head off in the direction of the store's Camping department in search of a foldable Yard Chair.");
@@ -1795,7 +1795,7 @@ namespace TeamCSFile
                         Thread.Sleep(2000);
                         Console.WriteLine("\n\nDo you choose to reach out for it, or to stumble your way to the prized Yard Chair in the dark?");
                         Thread.Sleep(2000);
-                        Console.Write("\n1. Attempt to grab the torch\n2. Continue without it");
+                        Console.Write("\n1. Attempt to grab the torch\n2. Continue without it\n");
                         int campingDecision2 = GetValidInput(1, 2);
                         switch (campingDecision2)
                         {
@@ -1832,7 +1832,8 @@ namespace TeamCSFile
                         Console.Clear();
                         Console.Write("\nYou turned back and made a tactical retreat to the entrance.");
                         Thread.Sleep(2000);
-                        break;
+                        inCampingRoom = false;
+                        return;
 
                     default:
                         break;
@@ -1850,7 +1851,7 @@ namespace TeamCSFile
 
                 while (!gambleWin)
                 {
-                    if (spinCount >= 15)
+                    if (spinCount >= 15) // Allows the user to progress gambling feature at 15 attempts
                     {
                         spin1 = 7;
                         spin2 = 7;
@@ -1878,11 +1879,11 @@ namespace TeamCSFile
                         Console.WriteLine("\nYou hear a mechanism click as the slot machine moves to reveal a hidden passage through the dam.");
                         Thread.Sleep(2000);
                         Console.WriteLine("\nYou quickly grab the Yard Chair and make a beeline back to the entrance before any more chicanery can occur.");
-                        InventoryAmount[3]++;
+                        InventoryAmount[3]++; // Adds 1 camping chair to players inventory
                         Thread.Sleep(2000);
                         Console.Clear();
-                        gambleWin = true;
-                        inCampingRoom = false;
+                        gambleWin = true; // moves the user out of the gambling loop
+                        inCampingRoom = false; // moves the user out of the camping room loop
                     }
                     else
                     {
@@ -1894,7 +1895,7 @@ namespace TeamCSFile
             }
         }
 
-        static int GetValidInput(int min, int max)
+        static int GetValidInput(int min, int max) // Simple method to manage input validation throughout the game
         {
             int result = 0;
             bool validInput = false;
