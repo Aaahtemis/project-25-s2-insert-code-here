@@ -15,6 +15,7 @@ namespace TeamCSFile
         {
 
             int userInput;
+            bool inMenu = true;
 
             string[] theK = new string[]
                                             {
@@ -55,6 +56,7 @@ namespace TeamCSFile
 
                     case 2:
                         //Room Selection
+                        inMenu = false;
                         Program.RoomSelection();
                         break;
                     case 3:
@@ -63,7 +65,7 @@ namespace TeamCSFile
                         break;
                     case 4:
                         // Go to Checkout
-                        Checkout();
+                        inMenu = Checkout();
                         break;
                     case 0:
                         //Exit Function
@@ -78,7 +80,7 @@ namespace TeamCSFile
                 }
 
             }
-            while (userInput != 0);
+            while (inMenu == true);
         }
 
 
@@ -127,6 +129,7 @@ namespace TeamCSFile
         public static void Exit()
         {
             char playerInput;
+            bool inExitMenu = true;
 
             Console.WriteLine("Would you like to exit the programing?");
             Console.WriteLine("Press Y - to exit");
@@ -138,7 +141,7 @@ namespace TeamCSFile
 
                 if (playerInput == 'y')
                 {
-                    TheMainMenu();
+                    inExitMenu = false;
                 }
                 else if (playerInput == 'n')
                 {
@@ -147,10 +150,11 @@ namespace TeamCSFile
                 else
                 {
                     Console.WriteLine("Invalid Input - Please make sure you enter either Y or N");
+                    inExitMenu = true;
                     Thread.Sleep(3000);
                     break;
                 }
-            } while (playerInput != 'y' && playerInput != 'n');
+            } while (inExitMenu == true);
 
         }
 
