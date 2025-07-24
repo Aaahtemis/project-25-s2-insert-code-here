@@ -141,11 +141,12 @@ namespace TeamCSFile
 
                 if (playerInput == 'y')
                 {
-                    inExitMenu = false;
+                    Environment.Exit(0);
+                    
                 }
                 else if (playerInput == 'n')
                 {
-                    Environment.Exit(0);
+                    inExitMenu = false;
                 }
                 else
                 {
