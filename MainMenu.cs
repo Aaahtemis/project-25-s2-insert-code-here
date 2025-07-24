@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace TeamCSFile
 
             string[] theK = new string[]
                                             {
-                                                "_  __",
+                                                " _  __",
                                                 "| |/ /",
                                                 "| ' / ",
                                                 "| . \\ ",
@@ -30,8 +31,12 @@ namespace TeamCSFile
 
 
                 Console.Clear();
-                Console.WriteLine(theK);
-                Console.Write("-mart Game");
+                foreach (string line in theK)
+                {
+                    Console.WriteLine(line);
+                }
+                Console.SetCursorPosition(7, 4);
+                Console.WriteLine("-mart Game");
                 Console.WriteLine("Main Menu\n" + "Please select from the numbers below\n");
                 Console.WriteLine("1  Rest\n" +
                                   "2  Room Selection\n" +
@@ -97,8 +102,8 @@ namespace TeamCSFile
                 Console.WriteLine(line);
             }
 
-
-            Console.Write("You sit down at a chair and rest for a while");
+            Console.WriteLine();
+            Console.WriteLine("You sit down at a chair and rest for a while");
 
             Thread.Sleep(1000);
             Program.Health = 100;
@@ -127,24 +132,25 @@ namespace TeamCSFile
             Console.WriteLine("Press Y - to exit");
             Console.WriteLine("Press N - to cancel");
 
-            playerInput = Convert.ToChar(Console.ReadLine());
+            do
+            {
+                playerInput = Convert.ToChar(Console.ReadLine().ToLower());
 
-            if (playerInput == 'y')
-            {
-                TheMainMenu();
-            }
-            else if (playerInput == 'n')
-            {
-                Environment.Exit(0);
-            }
-            else
-            {
-                Console.WriteLine("Invalid Input - Please make sure you enter either Y or N");
-                Thread.Sleep(3000);
-                Console.Clear();
-                Exit();
-            }
-
+                if (playerInput == 'y')
+                {
+                    TheMainMenu();
+                }
+                else if (playerInput == 'n')
+                {
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input - Please make sure you enter either Y or N");
+                    Thread.Sleep(3000);
+                    break;
+                }
+            } while (playerInput != 'y' && playerInput != 'n');
 
         }
 
