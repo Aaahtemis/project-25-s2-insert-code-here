@@ -1619,10 +1619,13 @@ namespace TeamCSFile
             while (running)
             {
                 Console.Clear();
-                Console.WriteLine("You look around to see racks of clothing all around you, maybe what you're searching for is in these racks.");
-                Console.WriteLine("You also see that you can continue forward between these racks, but it looks like the prime spot for you to get jumped.\nDo you");
-                Console.WriteLine($"1: Search the clothing racks in hopes of finding a {InventoryName[0]}.\n2: Continue forward, knowing you are most likely to get jumped.");
-                Console.WriteLine("3: Leave.");
+                Console.WriteLine($@"you look around to see racks of clothing all around you, maybe what you're searching for is in one of these racks.
+You also see that you can continue forward between these racks, but it looks like the prime spot for you to get jumped.
+Do you:
+1: Search the clothing racks in hopes of finding a {InventoryName[0]}.
+2: Continue forward, knowing you are most likely to get jumped.
+3: Leave.");
+
                 int temp = 0;
                 try
                 {
@@ -1639,8 +1642,8 @@ namespace TeamCSFile
                     case 1:
                         Console.WriteLine("You look in the clothing racks.");
                         Thread.Sleep(1000);
-                        temp = rand.Next(1000);
-                        if (temp == 365)
+                        temp = rand.Next(5);
+                        if (temp == 4)
                         {
                             Console.WriteLine($"And found a {InventoryName[0]}!");
                             InventoryAmount[0]++;
@@ -1649,7 +1652,7 @@ namespace TeamCSFile
                         }
                         else
                         {
-                            Console.WriteLine("And found nothing.");
+                            Console.WriteLine("And found nothing, Perhaps look closer?");
                             Console.WriteLine("Enter to continue.");
                             Console.ReadLine();
                         }
@@ -1677,12 +1680,18 @@ namespace TeamCSFile
             Console.WriteLine("Halfway to the end, something lands behind you and knocks you over.");
             Console.ReadLine();
             Combat();
-            Console.WriteLine($"After the battle and passing between the aisle you notice a pedestal ahead. On it is a {InventoryName[0]} on display. But it's under a glass container.");
+            Console.WriteLine($@"After the battle and passing between the aisle you notice a pedestal ahead. 
+On it is a {InventoryName[0]}, just sitting there. It almost seems as though it is waiting for you specifically. 
+However upon closer inspection it becomes clear some fool has placed it inside a glass container.");
             bool running = true;
             while (running)
             {
-                Console.WriteLine("It looks like there is a dial on the pedestal that unlocks the glass container. Or maybe you just break the glass.\nDo you");
-                Console.WriteLine("1: Break the glass.\n2: Try the dial.\n3: Leave.");
+                Console.WriteLine(@"It looks like there is a dial on the pedestal that unlocks the glass container. Or maybe you just break the glass.
+Do you:
+1: Break the glass.
+2: Try the dial.
+3: Leave.");
+                
                 int temp = 0;
                 try
                 {
@@ -1699,12 +1708,17 @@ namespace TeamCSFile
                     case 1:
                         Console.WriteLine("You try to break the glass.");
                         Thread.Sleep(1000);
-                        temp = rand.Next(100);
-                        if (temp == 65)
+                        temp = rand.Next(10);
+                        if (temp == 8)
                         {
                             Console.WriteLine($"And succeed!");
                             Console.WriteLine($"You got a {InventoryName[0]}!");
                             InventoryAmount[0]++;
+                            Console.ReadLine();
+                        }
+                        if (temp == 3)
+                        {
+                            Console.WriteLine("And hurt your hand, turns out glass is hard.");
                             Console.ReadLine();
                         }
                         else
@@ -1714,9 +1728,11 @@ namespace TeamCSFile
                         }
                         break;
                     case 2:
-                        Console.WriteLine("You take a closer look at the dial. It is a four combination lock with 0-9 on each. Entering every option might take a while.");
-                        Console.WriteLine("On the floor, a post-it note is crumpled on the floor.");
-                        Console.WriteLine("On the note is the code to the lock. You enter it into the lock and see that the glass container has unlocked.");
+                        Console.WriteLine(@"You take a closer look at the dial. It is a four combination lock with 0-9 on each. Entering every option might take a while.
+You notice a crumpled post-it note on the floor with what looks like it could be the code.");
+                        Thread.Sleep(50);
+                        Console.WriteLine(@"upon entering the code the case springs open so violently you barely get out of the way.
+amongst the dramitic fog now leaking from it's sundered form you spot the very item you came for");
                         Console.WriteLine($"You got a {InventoryName[0]}!");
                         InventoryAmount[0]++;
                         Console.WriteLine($"But so caught up in collecting the {InventoryName[0]}, you fail to spot the enemy behind you.");
