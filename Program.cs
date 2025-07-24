@@ -1,6 +1,8 @@
 ﻿using System;
-
+using System.IO;
+using System.Numerics;
 using System.Threading;
+
 namespace TeamCSFile
 {
     internal class Program
@@ -29,63 +31,9 @@ namespace TeamCSFile
         static void Main()
         { // Intro :
 
-            string[] kmart = new string[] {"" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "                                                                                                                                                                                 ",    
-             "                            .=============================================-                 ..:----------------------------------------------------------------------------=--..                  ",
-             "                           .=#*++++++++++++++++++++++++++++++++++++++++*#+.            ..:=+*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++***###+=:.                     ",
-             "                           -####*************************************###=.         .:=+**++++**************************************************************#########*=:.                          ",
-             "                          :*###*************************************###=.      .-***+++++**************************************************************#########=.                                ",
-             "                         .+###*************************************###=. .:-+#**+++++************************************************************#########*+-.                                    ",
-             "                         +###**************************************##+=+****++++************************************************************##########=-:.                                        ",
-             "                        =####**************************************##**++++*************************************************************#########*:..                                             ",
-             "                      .-####***************************************++++************************************************************#########*=.                                                   ",
-             "                      :*###**************************************+************************************************************#########*=:.                                                       ",
-             "                     .+###***********************************************************************************************#########*=:.                                                            ",
-             "                     =###********************************************************************************************#########+:..                                                                ",
-             "                    -####**************************************************************************************##########*-.                                                                      ",
-             "                   -####**********************************************************************************##########+=:.                                                                          ",
-             "                  :*###*******************************************************************************#########*-:..                                                          ..:===.             ",
-             "                 .+###***************************************************************************##########...............    .......     ..............................::.:+******-.....         ",
-             "                 =###***********************************************************************#########*+-. .+******==******+--+*******..:=**********+******+.-******+*****+-+***********+:         ",
-             "                -####**************************************************************************+++++***+=:=******-..=******:..+******.-******=....=******+.:******+:..  ..+******+.               ",
-             "               :####********************************************************************************++=+-=******=. =******-. +******: -*********+=******+::*******:     .:************=.          ",
-             "              :*###*************************************************************************************:---::::-+---:::::. .::::::..  ..........:::::::..:::::::..      ..:::::::::::.           ",
-             "             .+###*********************************************************************************************+++++***+-:.                                                                       ",
-             "            .=####**************************************************************************************************+++++***+=-.                                                                  ",
-             "            :####********************************************************************************************************++=++**##*:.                                                             ",
-             "           :####**************************************************************************************************************+++++***#+-:..                                                      ",
-             "          :####**************************************##########*********************************************************************+++++***+=-.                                                  ",
-             "         .+####************************************################**********************************************************************+++++****+=.                                             ",
-             "        .=####************************************##%%*+-:..-+##%%#######**********************************************************************++++***#*=:..                                      ",
-             "        -####************************************##%%+.         .-+*#%%%#######*********************************************************************+++++**#*=-:.                                 ",
-             "       .####************************************##%%#:               .:-+%%%%%######*********************************************************************+++++****+=:.                            ",
-             "      .####*************************************#%%%-                    ...-+%%%%%#####***********************************************************************+=++***#*+:.                       ",
-             "     .+##########################################%%=                            .-+##%%%%#########################################################################**++++***#*=:..                 ",
-             "    .=#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%+                                  .:=*#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#######*+=:.            ",
-             "    .:::::::::::::::::::::::::::::::::::::::::::::.                                      ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..          ", 
-             "                                                                                                                                                                                                  ",
-                                                                                                                                                                                                   
-            };
+            
 
-            Console.WriteLine("Please expand the console window.\n"+
-                "Press enter to continue");
-            Console.ReadLine();
-            
-            foreach(string line in kmart)
-            {
-                Console.WriteLine(line);
-                Thread.Sleep(100);
-            } // do we want this ?
-            
+            introAnim();
             
             Console.WriteLine("Your goal is to get an item from all four rooms/sections. \nEach room has different obstacles. \nFind all four items and make it to checkout to finish shopping" +
                 $" GOOD LUCK. \nYou need to find a {InventoryName[0]}, a {InventoryName[1]}, a {InventoryName[2]} and a {InventoryName[3]}");
@@ -94,6 +42,25 @@ namespace TeamCSFile
             Hub();
         }
 
+        public static void introAnim()//takes intro anim as it is atm and and makes it more efficient
+        {
+            Console.WriteLine("Please expand the console window.\n" +
+                "Press enter to continue");
+            Console.ReadLine();
+
+            string aline;
+            
+            Console.Clear();
+            StreamReader sr = new StreamReader($@"Kmart-logo.txt");
+            while (!sr.EndOfStream)
+            {
+                aline = sr.ReadLine();
+                Console.WriteLine(aline);
+                Thread.Sleep(50);
+            }
+            sr.Close();
+            
+        }
         static void Hub()
         {
 
@@ -1652,10 +1619,13 @@ namespace TeamCSFile
             while (running)
             {
                 Console.Clear();
-                Console.WriteLine("You look around to see racks of clothing all around you, maybe what you're searching for is in these racks.");
-                Console.WriteLine("You also see that you can continue forward between these racks, but it looks like the prime spot for you to get jumped.\nDo you");
-                Console.WriteLine($"1: Search the clothing racks in hopes of finding a {InventoryName[0]}.\n2: Continue forward, knowing you are most likely to get jumped.");
-                Console.WriteLine("3: Leave.");
+                Console.WriteLine($@"you look around to see racks of clothing all around you, maybe what you're searching for is in one of these racks.
+You also see that you can continue forward between these racks, but it looks like the prime spot for you to get jumped.
+Do you:
+1: Search the clothing racks in hopes of finding a {InventoryName[0]}.
+2: Continue forward, knowing you are most likely to get jumped.
+3: Leave.");
+
                 int temp = 0;
                 try
                 {
@@ -1672,8 +1642,8 @@ namespace TeamCSFile
                     case 1:
                         Console.WriteLine("You look in the clothing racks.");
                         Thread.Sleep(1000);
-                        temp = rand.Next(1000);
-                        if (temp == 365)
+                        temp = rand.Next(5);
+                        if (temp == 4)
                         {
                             Console.WriteLine($"And found a {InventoryName[0]}!");
                             InventoryAmount[0]++;
@@ -1682,7 +1652,7 @@ namespace TeamCSFile
                         }
                         else
                         {
-                            Console.WriteLine("And found nothing.");
+                            Console.WriteLine("And found nothing, Perhaps look closer?");
                             Console.WriteLine("Enter to continue.");
                             Console.ReadLine();
                         }
@@ -1710,12 +1680,18 @@ namespace TeamCSFile
             Console.WriteLine("Halfway to the end, something lands behind you and knocks you over.");
             Console.ReadLine();
             Combat();
-            Console.WriteLine($"After the battle and passing between the aisle you notice a pedestal ahead. On it is a {InventoryName[0]} on display. But it's under a glass container.");
+            Console.WriteLine($@"After the battle and passing between the aisle you notice a pedestal ahead. 
+On it is a {InventoryName[0]}, just sitting there. It almost seems as though it is waiting for you specifically. 
+However upon closer inspection it becomes clear some fool has placed it inside a glass container.");
             bool running = true;
             while (running)
             {
-                Console.WriteLine("It looks like there is a dial on the pedestal that unlocks the glass container. Or maybe you just break the glass.\nDo you");
-                Console.WriteLine("1: Break the glass.\n2: Try the dial.\n3: Leave.");
+                Console.WriteLine(@"It looks like there is a dial on the pedestal that unlocks the glass container. Or maybe you just break the glass.
+Do you:
+1: Break the glass.
+2: Try the dial.
+3: Leave.");
+                
                 int temp = 0;
                 try
                 {
@@ -1732,12 +1708,17 @@ namespace TeamCSFile
                     case 1:
                         Console.WriteLine("You try to break the glass.");
                         Thread.Sleep(1000);
-                        temp = rand.Next(100);
-                        if (temp == 65)
+                        temp = rand.Next(10);
+                        if (temp == 8)
                         {
                             Console.WriteLine($"And succeed!");
                             Console.WriteLine($"You got a {InventoryName[0]}!");
                             InventoryAmount[0]++;
+                            Console.ReadLine();
+                        }
+                        if (temp == 3)
+                        {
+                            Console.WriteLine("And hurt your hand, turns out glass is hard.");
                             Console.ReadLine();
                         }
                         else
@@ -1747,9 +1728,11 @@ namespace TeamCSFile
                         }
                         break;
                     case 2:
-                        Console.WriteLine("You take a closer look at the dial. It is a four combination lock with 0-9 on each. Entering every option might take a while.");
-                        Console.WriteLine("On the floor, a post-it note is crumpled on the floor.");
-                        Console.WriteLine("On the note is the code to the lock. You enter it into the lock and see that the glass container has unlocked.");
+                        Console.WriteLine(@"You take a closer look at the dial. It is a four combination lock with 0-9 on each. Entering every option might take a while.
+You notice a crumpled post-it note on the floor with what looks like it could be the code.");
+                        Thread.Sleep(50);
+                        Console.WriteLine(@"upon entering the code the case springs open so violently you barely get out of the way.
+amongst the dramitic fog now leaking from it's sundered form you spot the very item you came for");
                         Console.WriteLine($"You got a {InventoryName[0]}!");
                         InventoryAmount[0]++;
                         Console.WriteLine($"But so caught up in collecting the {InventoryName[0]}, you fail to spot the enemy behind you.");
@@ -1773,166 +1756,156 @@ namespace TeamCSFile
 
         static void Camping()
         {
-            bool yesno, doNotSpamHubPlz = true;
-
-            int threechoice = 0, twochoice = 0, reel1 = 0, reel2 = 0, reel3 = 0, gamblewin = 0;
+            bool inCampingRoom = true, gambleWin = false; // Loop control variables
+            int spinCount = 0, spin1, spin2, spin3; // Variables for controlling the gambling game
 
             Console.Clear();
+            Console.WriteLine("\nYou head off in the direction of the store's Camping department in search of a foldable Yard Chair.");
+            Thread.Sleep(2000);
+            Console.WriteLine("\nAs you approach the outer aisles of the department you feel an inexplicable chill run over your body. Something isn't right, but you aren't sure what.");
+            Thread.Sleep(2000);
 
-            while (doNotSpamHubPlz)
+            while (inCampingRoom)
             {
-                Console.WriteLine("\nYou head off in the direction of the store's Camping department in search of a foldable Yard Chair.");
-                Thread.Sleep(3000);
-                Console.WriteLine("\nAs you approach the outer aisles of the department you feel an inexplicable chill run over your body. Something isn't right, but you aren't sure what.");
-                Thread.Sleep(3000);
-                Console.WriteLine("\n\nWhat do you do next?\n\n");
-                Console.Write("\n1. Proceed forward into the tents aisle");
-                Console.Write("\n2. Go around and enter via the fishing aisle");
-                Console.Write("\n3. Turn around and leave");
-
-                try
-                {
-                    while (threechoice != 1 && threechoice != 2 && threechoice != 3)
-                    {
-                        threechoice = Convert.ToInt32(Console.ReadLine());
-                    }
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Huh");
-                    Console.ReadLine();
-                }
+                Console.WriteLine("\n\nWhat do you do next?\n\n1. Proceed forward into the tents aisle\n2. Go around and enter via the fishing aisle\n3. Turn around and leave");
+                int campingDecision1 = GetValidInput(1, 3);
                 Console.Clear();
-                Thread.Sleep(3000);
-                switch (threechoice)
+                Thread.Sleep(2000);
+                switch (campingDecision1)
                 {
                     case 1:
                         Console.WriteLine("\nAs you walk through the aisle the lights suddenly blow, one by one. Now enshrouded by darkness, you can faintly see what looks like a headtorch hanging on one of the racks.");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         Console.WriteLine("\n\nDo you choose to reach out for it, or to stumble your way to the prized Yard Chair in the dark?");
-                        Thread.Sleep(3000);
-                        Console.Write("\n1. Attempt to grab the torch");
-                        Console.Write("\n2. Continue without it");
-
-                        try
+                        Thread.Sleep(2000);
+                        Console.Write("\n1. Attempt to grab the torch\n2. Continue without it\n");
+                        int campingDecision2 = GetValidInput(1, 2);
+                        switch (campingDecision2)
                         {
-                            while (threechoice != 1 && threechoice != 2 && threechoice != 3)
-                            {
-                                twochoice = Convert.ToInt32(Console.ReadLine());
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Huh");
-                            Console.ReadLine();
+                            case 1:
+                                Console.Clear();
+                                Console.Write("\nYou take the torch and place it on your head. However, its light illuminates an enemy!");
+                                Thread.Sleep(2000);
+                                Combat();
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.Write("\nYou choose to continue without the torch. Unfortunately, you overestimated how many carrots you eat and are hit by a sneak attack!");
+                                Thread.Sleep(2000);
+                                Combat();
+                                break;
+                            default:
+                                break;
                         }
                         Console.Clear();
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         break;
 
                     case 2:
                         Console.WriteLine("\nAs you walk through the aisle you notice that the floor is wet, perhaps a cleaner left their job unfinished.");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         Console.WriteLine("\n..but upon looking down, you realise that you are somehow standing in the middle of a river flowing straight through the aisle?");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         Console.WriteLine("\n\nBefore you can react to this bizarre situation, a figure leaps toward you out of the water!");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         Combat();
-                        
-
                         break;
-
 
                     case 3:
                         Console.Clear();
                         Console.Write("\nYou turned back and made a tactical retreat to the entrance.");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
+                        inCampingRoom = false;
+                        return;
 
-
+                    default:
                         break;
-
-
                 }
-                if (doNotSpamHubPlz)
-                { 
-                    switch (twochoice)
+                Console.Clear();
+                Console.WriteLine("\nYou have arrived at your destination. You see a lone Yard Chair propped up against a shelf at the mouth of the unexplainable river that is now flowing through the store.");
+                Thread.Sleep(2000);
+                Console.WriteLine("\n..but before you can get to it, a group of beavers jump out of the water and set a new record for dam construction speedrunning and block your path.");
+                Thread.Sleep(2000);
+                Console.WriteLine("\nUpon closer inspection, you notice there is a slot machine built into the dam, with a sign saying that you will gain entry if you hit the jackpot.");
+                Thread.Sleep(2000);
+                Console.WriteLine("\nIt seems you have no choice but to gamble if you want the chair...");
+                Thread.Sleep(2000);
+                Console.Clear();
+
+                while (!gambleWin)
+                {
+                    if (spinCount >= 15) // Allows the user to progress gambling feature at 15 attempts
                     {
-                        case 1:
-                            Console.Clear();
-                            Console.Write("\nYou take the torch and place it on your head. However, its light illuminates an enemy!");
-                            Thread.Sleep(3000);
-                            Combat();
-                            break;
-
-
-                        case 2:
-                            Console.Clear();
-                            Console.Write("\nYou choose to continue without the torch. Unfortunately, you overestimated how many carrots you eat and are hit by a sneak attack!");
-                            Thread.Sleep(3000);
-                            Combat();
-                            break;
-                        
-
+                        spin1 = 7;
+                        spin2 = 7;
+                        spin3 = 7;
+                    }
+                    else
+                    {
+                        spin1 = rand.Next(1, 8);
+                        spin2 = rand.Next(1, 8);
+                        spin3 = rand.Next(1, 8);
                     }
 
-                    Console.Clear();
-                    Console.WriteLine("\nYou have arrived at your destination. You see a lone Yard Chair propped up against a shelf at the mouth of the unexplainable river that is now flowing through the store.");
-                    Thread.Sleep(3000);
-                    Console.WriteLine("\n..but before you can get to it, a group of beavers jump out of the water and set a new record for dam construction speedrunning and block your path.");
-                    Thread.Sleep(3000);
-                    Console.WriteLine("\nUpon closer inspection, you notice there is a slot machine built into the dam, with a sign saying that you will gain entry if you hit the jackpot.");
-                    Thread.Sleep(3000);
-                    Console.WriteLine("\nIt seems you have no choice but to gamble if you want the chair...");
-                    Thread.Sleep(6000);
-                    Console.Clear();
+                    spinCount++;
+                    Console.Write($"\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t{spin1}");
+                    Thread.Sleep(500);
+                    Console.Write($" {spin2}");
+                    Thread.Sleep(500);
+                    Console.Write($" {spin3}");
+                    Thread.Sleep(500);
 
-
-                    while (gamblewin != 1)
+                    if (spin1 == 7 && spin2 == 7 && spin3 == 7)
                     {
-
-
-                        reel1 = rand.Next(1, 8);
-
-                        reel2 = rand.Next(1, 8);
-
-                        reel3 = rand.Next(1, 8);
-
-
-                        Console.Write($"\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t{reel1}");
-
-                        Thread.Sleep(500);
-
-                        Console.Write($" {reel2}");
-
-                        Thread.Sleep(500);
-
-                        Console.Write($" {reel3}");
-
-                        Thread.Sleep(500);
-
-                        if (reel1 == 7 && reel2 == 7 && reel3 == 7)
-                        {
-                            gamblewin = 1;
-                            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\t\t\tToday is your lucky day");
-                            Thread.Sleep(3000);
-                            Console.WriteLine("\nYou hear a mechanism click as the slot machine moves to reveal a hidden passage through the dam.");
-                            Thread.Sleep(3000);
-                            Console.WriteLine("\nYou quickly grab the Yard Chair and make a beeline back to the entrance before any more chicanery can occur.");
-                            InventoryAmount[3]++;
-                            doNotSpamHubPlz = false;
-                            Thread.Sleep(3000);
-                            Console.Clear();
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("\n\n\n\t\t\t\t\t\t\t\t\t\t\tTip: 90% of gamblers quit right before they win big");
-                            Thread.Sleep(2000);
-                            Console.Clear();
-                        }
+                        Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\t\t\tToday is your lucky day");
+                        Thread.Sleep(2000);
+                        Console.WriteLine("\nYou hear a mechanism click as the slot machine moves to reveal a hidden passage through the dam.");
+                        Thread.Sleep(2000);
+                        Console.WriteLine("\nYou quickly grab the Yard Chair and make a beeline back to the entrance before any more chicanery can occur.");
+                        InventoryAmount[3]++; // Adds 1 camping chair to players inventory
+                        Thread.Sleep(2000);
+                        Console.Clear();
+                        gambleWin = true; // moves the user out of the gambling loop
+                        inCampingRoom = false; // moves the user out of the camping room loop
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n\n\n\t\t\t\t\t\t\t\t\t\t\tTip: 90% of gamblers quit right before they win big");
+                        Thread.Sleep(2000);
+                        Console.Clear();
                     }
                 }
             }
+        }
+
+        static int GetValidInput(int min, int max) // Simple method to manage input validation throughout the game
+        {
+            int result = 0;
+            bool validInput = false;
+
+            while (!validInput)
+            {
+                string input = Console.ReadLine();
+                try
+                {
+                    int value = Convert.ToInt32(input);
+                    if (value >= min && value <= max)
+                    {
+                        result = value;
+                        validInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Please enter a number between {min} and {max}.");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
+
+            return result;
         }
 
         static void Toys()
