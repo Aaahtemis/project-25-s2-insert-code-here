@@ -127,8 +127,9 @@ namespace TeamCSFile
 
 
             } while (inMenu);
+        }
 
-            void Rest()
+            public static void Rest()
             {
                 Console.Write("You sit down at a chair and rest for a while");
                 Thread.Sleep(1000);
@@ -146,12 +147,12 @@ namespace TeamCSFile
 
             }
 
-            static void Exit()
+            public static void Exit()
             {
                 Console.WriteLine("\nPlease press any key to exit");
                 Console.ReadLine();
             }
-            string RoomSelection()
+            public static string RoomSelection()
             {
                 int num = 0;
                 bool inMenu = true;
@@ -219,7 +220,7 @@ namespace TeamCSFile
 
             }
 
-        }
+        
 
         static void Inventory()
         {
