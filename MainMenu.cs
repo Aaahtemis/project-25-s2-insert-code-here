@@ -8,8 +8,7 @@ namespace TeamCSFile
 {
     class MainMenu
     {
-
-
+        
 
         public static void TheMainMenu()
         {
@@ -23,8 +22,6 @@ namespace TeamCSFile
 
                 Console.Clear();
                 Console.WriteLine("K-mart Game");
-                Console.WriteLine("Main Menu");
-
                 Console.WriteLine("Main Menu\n" + "Please select from the numbers below\n");
                 Console.WriteLine("1  Rest\n" +
                                   "2  Room Selection\n" +
@@ -37,7 +34,9 @@ namespace TeamCSFile
                 switch (userInput)
                 {
                     case 1:
-                    //Rest
+                        //Rest
+                        Rest();
+                        break;
 
                     case 2:
                     //Room Selection
@@ -49,13 +48,15 @@ namespace TeamCSFile
                     // Go to Checkout
 
                     case 0:
-                    //Exit Function
-                    break;
+                        //Exit Function
+                        Exit();
+                        break;
 
 
                     default:
                         Console.WriteLine("Invalid Input. Please keep it between 0-4");
                         break;
+                        
                 }
 
             }
@@ -66,6 +67,24 @@ namespace TeamCSFile
         public static void Rest()
         {
 
+            string[] chair = new string[]
+{
+    ".-===-.",
+    "| . . |",
+    "| .'. |",
+    "() _____()",
+    "||_____||",
+    "W     W"
+};
+
+            Console.Clear();
+            
+            foreach (string line in chair)
+            {
+                Console.WriteLine(line);
+            }
+
+
             Console.Write("You sit down at a chair and rest for a while");
 
             Thread.Sleep(1000);
@@ -73,33 +92,35 @@ namespace TeamCSFile
             Program.Stamina = 100;
             for (int i = 0; i < 10; i++)
             {
-                Console.Write(".");
+                Console.SetCursorPosition(10 + i, 1);
+                Console.Write("z ");
                 Thread.Sleep(500);
 
             }
 
+            Console.SetCursorPosition(10, 25);
+            Console.WriteLine($"\nYour Health: {Program.Health} and Stamina: {Program.Stamina} - is restored");
+            Thread.Sleep(5000);
 
-            Console.WriteLine($"\nYour Health: {Program.Health} and Stamina: {Program.Stamina} are restored");
-            Thread.Sleep(1000);
 
         }
 
 
         public static void Exit()
         {
-            bool playerInput;
+            char playerInput;
             
             Console.WriteLine("Would you like to exit the programing?");
             Console.WriteLine("Press Y - to exit");
             Console.WriteLine("Press N - to cancel");
 
-            playerInput = Convert.ToBoolean(Console.ReadLine());
+            playerInput = Convert.ToChar(Console.ReadLine());
 
-            if (playerInput == false)
+            if (playerInput == 'y')
             {
                 TheMainMenu();
             }
-            else if (playerInput == true)
+            else if (playerInput == 'n')
             {
                 Environment.Exit(0);
             }
@@ -110,9 +131,6 @@ namespace TeamCSFile
                 Console.Clear();
                 Exit();
             }
-
-
-
 
 
         }
