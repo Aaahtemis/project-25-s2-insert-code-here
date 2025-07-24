@@ -74,6 +74,10 @@ namespace TeamCSFile
             };
             Random rand = new Random();
             int room = rand.Next(1, 5);
+            Room = rand.Next(1, 5);
+            //CombatOld();
+
+
             Combat.Start(room);
             room = rand.Next(1, 5);
             Combat.Start(room);

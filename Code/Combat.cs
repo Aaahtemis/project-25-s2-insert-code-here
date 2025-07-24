@@ -1,4 +1,6 @@
-﻿namespace CombatSystem
+﻿using System.ComponentModel;
+
+namespace CombatSystem
 {
     internal class Combat
     {
@@ -139,6 +141,9 @@
                 Thread.Sleep(2500);
                 Console.Clear();
 
+
+
+
             turns++; // increment turn to allow player to act first
 
             while (inCombat)            // new loop.
@@ -146,7 +151,7 @@
 
                 Console.Clear();
                 BuildHUD();
-
+                Format.DisplayResponse();
                 if (turns % 2 != 0)     // player takes turn
                 {
                     inCombat = PerformAction();
@@ -220,7 +225,6 @@
                     }
 
                     inventory[Player.input - 1].amount--;
-                    Console.ReadLine();
                 }
             } else
             {
@@ -276,7 +280,7 @@
         {
             // Combat UI v
 
-            string border = new string('-', Console.WindowWidth);
+            string border = new string('-', 20);
 
 
             Format.AddToResponse(border);
@@ -321,13 +325,16 @@
         static bool PerformAction()
         {
 
+
             Player.GetInt();
 
             if (Player.input == 1)    // if Attack chosen
             {
                 Random rand = new Random();
+                BuildHUD();
                 Format.AddToResponse("Select an attack");
-                Format.AddToResponse($"/blue 1. Light Attack ({lightAttack.power} DMG, /reset  req. {lightAttack.stamina} STM)\t\t /red 2. Heavy Attack ({heavyAttack.power} DMG, /reset req {heavyAttack.stamina} STM)\t\t /yellow 3. Hail Mary /reset  (Do I feel lucky?)");
+                Format.AddToResponse($"/blue 1. Light Attack ({lightAttack.power} DMG, req. {lightAttack.stamina} STM)\t\t /red 2. Heavy Attack ({heavyAttack.power} DMG, /reset req {heavyAttack.stamina} STM)\t\t /yellow 3. Hail Mary (Do I feel lucky?)");
+                Format.DisplayResponse(false);
 
                 Player.GetInt();
                 int attackChoice = Player.input; // store attack choice
@@ -339,9 +346,12 @@
                 int targetChoice = 0;
 
 
-                if (Player.input == 1 || Player.input == 2)    // if Attack chosen
+                if (attackChoice == 1 || attackChoice == 2)    // if Attack chosen
                 {
-                    Console.WriteLine("\n\nSelect a target:\n\n");
+
+                    Format.AddToResponse("Select a target:", 2, 2);
+                    Format.DisplayResponse(false, false);
+
                     Player.GetInt(onfield.Length);
                     targetChoice = Player.input; // store target choice
 
@@ -374,7 +384,7 @@
                 }
                 
 
-                else if (Player.input == 3)   // if Hail Mary chosen
+                else if (attackChoice == 3)   // if Hail Mary chosen
                 {
                     Console.Clear();
 

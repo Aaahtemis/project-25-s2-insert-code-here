@@ -10,15 +10,31 @@ public static class Format
 {
     public static string[] response = new string[0];
 
-    public static void AddToResponse(string input)
+    public static void AddToResponse(string input, int padUp = 0, int padDown = 0)
     {
+        for (int i = 0; i < padUp; i++)
+        {
+            input = "\n" + input;
+        }
+        for (int i = 0; i < padDown; i++)
+        {
+            input = input + "\n";
+        }
+
         Array.Resize(ref response, response.Length + 1);
         response[response.Length - 1] = input;
+
+        
+
     }
 
-    public static void DisplayResponse(bool isDelayed = false)
+    public static void DisplayResponse(bool isDelayed = false, bool clear = true)
     {
-        Console.Clear(); // might remove later.
+        if (clear)
+        {
+            Console.Clear();
+        }
+
 
         if (response.Length != 0)
         {
@@ -30,6 +46,7 @@ public static class Format
                 Console.ResetColor();
             }
         }
+
         if (!isDelayed)
         {
             response = new string[0];
@@ -46,10 +63,9 @@ public static class Format
     }
 
 
-
     public static void writeSpecial(string input)
     {
-        string[] split = input.Split(' ');
+        string[] split = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         for (int i = 0; i < split.Length; i++)
         {
