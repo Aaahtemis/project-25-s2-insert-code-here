@@ -39,7 +39,7 @@ namespace TeamCSFile
                 $" GOOD LUCK. \nYou need to find a {InventoryName[0]}, a {InventoryName[1]}, a {InventoryName[2]} and a {InventoryName[3]}");
             Console.WriteLine("Press Enter to proceed");
             Console.ReadLine();
-            Hub();
+            MainMenu.TheMainMenu();
         }
 
         public static void introAnim()//takes intro anim as it is atm and and makes it more efficient
@@ -61,97 +61,11 @@ namespace TeamCSFile
             sr.Close();
             
         }
-        static void Hub()
-        {
+        
 
-            // move rooms - to which room new method
-            // rest? 
-            // place to check inventory 
-            // show  list of rooms completed
-            // cross off shopping list
-            // 
+            
 
-            int num = 10;
-            bool inMenu = true;
-
-            do
-            {
-                Console.Clear();
-
-                Console.WriteLine("Main Menu\n" + "Please select from the numbers below\n");
-                Console.WriteLine("1  Rest\n" +
-                                  "2  Room Selection\n" +
-                                  "3  Check Your inventory\n" +
-                                  "4  Go to Checkout\n" +
-                                  "0  Exit The Menu");
-
-                try
-                {
-                    num = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Huh");
-                    Console.ReadLine();
-                }
-
-                Console.Clear();
-
-                switch (num)
-                {
-                    case 1:
-                        Rest();
-                        break;
-
-                    case 2:
-                        RoomSelection();
-                        break;
-
-                    case 3:
-                        Inventory();
-                        break;
-
-                    case 4:
-                        inMenu = Checkout();
-                        break;
-
-                    case 0:
-                        Exit();
-                        inMenu = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Input. Please keep it between 0-4");
-                        Console.ReadLine();
-                        break;
-                }
-
-
-            } while (inMenu);
-        }
-
-            public static void Rest()
-            {
-                Console.Write("You sit down at a chair and rest for a while");
-                Thread.Sleep(1000);
-                Health = 100;
-                Stamina = 100;
-                for (int i = 0; i < 10; i++)
-                {
-                    Console.Write(".");
-                    Thread.Sleep(500);
-
-                }
-                Console.WriteLine($"\nYour Health: {Health} and Stamina: {Stamina} are restored");
-                Thread.Sleep(1000);
-                Exit();
-
-            }
-
-            public static void Exit()
-            {
-                Console.WriteLine("\nPlease press any key to exit");
-                Console.ReadLine();
-            }
+            
             public static string RoomSelection()
             {
                 int num = 0;
@@ -2327,27 +2241,6 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                 Console.ReadLine();
             }
         }
-        static bool Checkout()
-        {
-            Console.Clear();
-            if (InventoryAmount[0] > 0 && InventoryAmount[1] > 0 && InventoryAmount[2] > 0 && InventoryAmount[3] > 0)
-            {
-                Console.WriteLine("With everything you need, you walk to the checkout." +
-                    "\nYou approach the checkout worker and put your items on the counter." +
-                    "\nThey scan the items and the total comes out to $129.96" +
-                    "\nYou pay and exit the store, having completed your shopping for today.");
-                Console.WriteLine("\nPress enter to finish the game.");
-                Console.ReadLine();
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("You are missing items to contine to the checkout. " +
-                    "\nMake sure you have got everything you need before checking out." +
-                    "\nEnter to continue.");
-                Console.ReadLine();
-                return true;
-            }
-        }
+        
     }
 }
