@@ -10,22 +10,29 @@ public static class Format
 {
     public static string[] response = new string[0];
 
-    public static void AddToResponse(string input, int padUp = 0, int padDown = 0)
+
+    
+
+
+    public static void AddToResponse(string input = "", int padUp = 0, int padDown = 0)
     {
         for (int i = 0; i < padUp; i++)
         {
-            input = "\n" + input;
+            AddBlank();
         }
-        for (int i = 0; i < padDown; i++)
-        {
-            input = input + "\n";
-        }
-
+        
         Array.Resize(ref response, response.Length + 1);
         response[response.Length - 1] = input;
 
-        
-
+        for (int i = 0; i < padDown; i++)
+        {
+            AddBlank();
+        }
+    }
+    static void AddBlank()
+    {
+        Array.Resize(ref response, response.Length + 1);
+        response[response.Length - 1] = "";
     }
 
     public static void DisplayResponse(bool isDelayed = false, bool clear = true)

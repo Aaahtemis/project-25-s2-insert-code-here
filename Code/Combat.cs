@@ -62,8 +62,8 @@ namespace CombatSystem
         //"4  Camping\n" +
 
 
-        static int health = 100;
-        static int stamina = 100;
+        public static int health = 100;
+        public static int stamina = 100;
 
 
         static (int power, int stamina) lightAttack = (20, 10), heavyAttack = (40, 15); // power and stamina cost for light and heavy attacks respectively
@@ -355,6 +355,10 @@ namespace CombatSystem
                     Player.GetInt(onfield.Length);
                     targetChoice = Player.input; // store target choice
 
+
+                    BuildHUD();
+
+
                     switch (attackChoice)
                     {
                         case 1: // Light Attack
@@ -539,7 +543,7 @@ namespace CombatSystem
                     }
                     else
                     {
-                        Player.health -= damageDealt;
+                        health -= damageDealt;
                     }
                 }
 
