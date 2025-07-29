@@ -40,6 +40,12 @@ public static class Format
         {
             for (int i = 0; i < response.Length; i++)
             {
+                if (WindowCentre().y + (i - response.Length / 2) < 0 || WindowCentre().x - response[i].Length / 2 < 0)
+                {
+                    Console.WriteLine("Invalid write location");
+                    continue;
+                }
+
                 Console.SetCursorPosition(WindowCentre().x - response[i].Length / 2, WindowCentre().y + (i - response.Length / 2));
                 writeSpecial(response[i]);
                 Console.WriteLine();
@@ -119,11 +125,13 @@ public static class Format
 
 public static class Player
 {
-    public const int maxHealth = 100;
-    public static int health = maxHealth;
 
-    public const int maxStamina = 100;
-    public static int stamina = maxStamina;
+    //      removed health for consistency within combat.
+    //public const int maxHealth = 100;
+    //public static int health = maxHealth;
+
+    //public const int maxStamina = 100;
+    //public static int stamina = maxStamina;
 
 
 
