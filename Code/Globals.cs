@@ -147,6 +147,7 @@ public static class Player
 
     public static void GetInt(int max = 3, int min = 1)
     {
+        input = -1;
         while(!Int32.TryParse(Console.ReadLine(), out input) && input >= min && input <= max)
         {
             Format.AddToResponse(input + "is not a valid input.");
