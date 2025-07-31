@@ -88,7 +88,7 @@ namespace TeamCSFile
             }
         public static void selectAnims(int i) //makes the selected option go white to make selection a little clearer - is a little slow atm, might tweak
         {
-            sr = new StreamReader($@"selction highlight\select-{i}.txt");
+            sr = new StreamReader($@"selction highlight\select-{i}.txt");//does any of the 4 selections
             Console.Clear();
             string aline;
             while (!sr.EndOfStream)
