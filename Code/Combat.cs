@@ -5,6 +5,9 @@ namespace CombatSystem
     internal class Combat
     {
 
+
+
+
         static ConsoleColor[] introAnim =
         {
             ConsoleColor.Blue,
@@ -66,8 +69,7 @@ namespace CombatSystem
         public static int stamina = 100;
 
 
-        static (int power, int stamina) lightAttack = (20, 10), heavyAttack = (40, 15); // power and stamina cost for light and heavy attacks respectively
-        static int guardStamina = 20; // stamina cost for guarding
+        
 
 
         //This one is for combat
@@ -81,6 +83,42 @@ namespace CombatSystem
         static bool heavy = false; // used to determine if the player is using a heavy attack
 
 
+
+
+
+
+        // weapon creation whenever you want to add something. Add weapon names to enum if wanted
+        public enum WEAPONS { Fists, Bat, Katana, Bow, Mace } // weapon types
+
+        public class weapon // flexible weapon class
+        {
+            public WEAPONS name;
+            public (int power, int stamina) lightAttack;
+            public (int power, int stamina) heavyAttack;
+            public int guard;
+
+            public weapon (WEAPONS name, int lightAttackPower, int lightAttackStamina, int heavyAttackPower, int heavyAttackStamina, int guard)
+            {
+                this.name = name;
+                this.lightAttack = (lightAttackPower, lightAttackStamina);
+                this.heavyAttack = (heavyAttackPower, heavyAttackStamina);
+                this.guard = guard;
+            }
+        }
+
+        // default weapon equipped
+        private static weapon baseWeapon = new weapon(WEAPONS.Fists, 5, 10, 10, 20, 20);
+
+        // stored weapons created
+        public static List<weapon> weaponInventory = new List<weapon>() 
+        {
+            baseWeapon,
+            new weapon(WEAPONS.Bat, 15, 15, 20, 30, 15),
+            new weapon(WEAPONS.Katana, 30, 15, 35, 20, 25),
+            new weapon(WEAPONS.Bow, 20, 10, 30, 20, 30),
+            new weapon(WEAPONS.Mace, 30, 30, 50, 50, 30)
+        };
+        public static int equippedWeapon = 0;
 
 
         public static void Start(int roomNum)
@@ -267,12 +305,12 @@ namespace CombatSystem
         {
             // Combat UI v
 
-            string border = new string('-', 20);
+
+         string border = new string('-', 20);
 
 
 
-
-            Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.White;
 
             string[] enemyNamesToDisplay = new string[0];
             string[] enemyHealthToDisplay = new string[0];
@@ -297,7 +335,9 @@ namespace CombatSystem
 
             Format.AddToResponse("/green YOU", 4);
             Format.AddToResponse($"HP: /green {health}\t\t /reset STM: /blue {stamina}", 1);
-            Format.AddToResponse("1. Attack\t\t2. Items\t\t3. Guard (Take no damage for 1 turn, req. 20 STM)\n\n", 1, 2);
+            Format.AddToResponse($"Equipped Weapon: {weaponInventory[equippedWeapon].name}", 1);
+            Format.AddToResponse($"1. Attack\t2. Items\t3. Guard (Take no damage for 1 turn, req. /blue {weaponInventory[equippedWeapon].guard} /reset STM\t4. Select Weapon", 0, 2);
+            Format.AddToResponse($" /red Performing an action takes 1 turn. Using a heavy attack takes 2. /reset ");
             Format.AddToResponse(border);
 
         }
@@ -318,10 +358,10 @@ namespace CombatSystem
                 Random rand = new Random();
                 BuildHUD();
                 Format.AddToResponse("Select an attack");
-                Format.AddToResponse($"/blue 1. Light Attack ({lightAttack.power} DMG, req. {lightAttack.stamina} STM, 1 TURN)\t\t /red 2. Heavy Attack ({heavyAttack.power} DMG, /reset req {heavyAttack.stamina} STM, 2 TURNs)\t\t /yellow 3. Hail Mary (Do I feel lucky?) req. (1 TURN)");
+                Format.AddToResponse($"/blue 1. Light Attack ({weaponInventory[equippedWeapon].lightAttack.power} DMG, req. {weaponInventory[equippedWeapon].lightAttack.stamina} STM, 1 TURN)\t\t /red 2. Heavy Attack ({weaponInventory[equippedWeapon].heavyAttack.power} DMG, /reset req {weaponInventory[equippedWeapon].heavyAttack.stamina} STM, 2 TURNs)\t\t /yellow 3. Hail Mary (Do I feel lucky?) req. (1 TURN)");
                 Format.DisplayResponse(false);
 
-                Player.GetInt();
+                Player.GetInt(4);
                 int attackChoice = Player.input; // store attack choice
                 Console.Clear();
 
@@ -345,10 +385,10 @@ namespace CombatSystem
                     switch (attackChoice)
                     {
                         case 1: // Light Attack
-                            if (stamina >= lightAttack.stamina)
+                            if (stamina >= weaponInventory[equippedWeapon].lightAttack.stamina)
                             {
-                                damageDealt = lightAttack.power;
-                                staminaDrained = lightAttack.stamina;
+                                damageDealt = weaponInventory[equippedWeapon].lightAttack.power;
+                                staminaDrained = weaponInventory[equippedWeapon].lightAttack.stamina;
                             }
                             else
                             {
@@ -356,10 +396,10 @@ namespace CombatSystem
                             }
                             break;
                         case 2: // Heavy Attack
-                            if (stamina >= heavyAttack.stamina)
+                            if (stamina >= weaponInventory[equippedWeapon].heavyAttack.stamina)
                             {
-                                damageDealt = heavyAttack.power;
-                                staminaDrained = heavyAttack.stamina;
+                                damageDealt = weaponInventory[equippedWeapon].heavyAttack.power;
+                                staminaDrained = weaponInventory[equippedWeapon].heavyAttack.stamina;
                             }
                             else
                             {
@@ -482,7 +522,7 @@ namespace CombatSystem
             {
                 if (stamina >= 20)
                 {
-                    stamina = stamina - guardStamina;
+                    stamina = stamina - weaponInventory[equippedWeapon].guard;
                     Console.BackgroundColor = ConsoleColor.DarkGreen;
                     Thread.Sleep(100);
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -498,6 +538,10 @@ namespace CombatSystem
                     Format.DisplayResponse();
                     Thread.Sleep(1500);
                 }
+            }
+            else if (Player.input == 4)
+            {
+                showWeaponInventory();
             }
 
             return true; // combat continues if not all enemies are defeated
@@ -571,6 +615,45 @@ namespace CombatSystem
             return true; // combat continues if player is alive
 
         }
+
+        public static void showWeaponInventory()
+        {
+
+            string border = new string('-', 20);
+            Format.AddToResponse("Select a weapon or enter '0' to exit.");
+
+            for (int i = 0; i < weaponInventory.Count(); i++)
+            {
+                Format.AddToResponse(border);
+                Format.AddToResponse($" /green {i + 1} /reset . /yellow {weaponInventory[i].name}  /reset");
+                Format.AddToResponse($" /green Light attack /reset (PWR: {weaponInventory[i].lightAttack.power}, STM: {weaponInventory[i].lightAttack.stamina}) | | /red Heavy attack /reset (PWR: {weaponInventory[i].heavyAttack.power}, STM: {weaponInventory[i].heavyAttack.stamina}) | | /blue Guard /reset (STM: {weaponInventory[i].guard})");
+            }
+
+            Format.AddToResponse(border);
+            Format.DisplayResponse();
+
+
+            Player.GetInt(weaponInventory.Count, 0);
+
+            if (Player.input == 0)
+            {
+                Format.AddToResponse("Did not select a weapon. Returning to combat..");
+            } else
+            {
+                equippedWeapon = Player.input - 1;
+                Format.AddToResponse($"Selected {weaponInventory[equippedWeapon].name}. Returning to combat..");
+                turns++; // increment turns so enemies can act
+            }
+            Format.DisplayResponse();
+            Thread.Sleep(1500);
+
+        }
+
+
+
+
+
+
 
     }
 }

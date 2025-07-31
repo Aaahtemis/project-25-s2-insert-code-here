@@ -1,0 +1,31 @@
+
+using weapons
+
+	equipped weapon
+	inventory weapons
+	available weapons?
+	
+	weapon selection
+	
+	weapon class
+	constructor
+	
+	implementing weapon aquisition in each room
+	
+	changing weapons outside of combat only?
+	changing weapons in combat taking 1 turn?
+	
+	name - L.ATK power & stamina / H.ATK power & stamina / guard stamina
+	
+	fists - 5 10/10 15 / 20
+	baseball bat - 15 15/ 20 30 / 15
+	katana - 30 15/ 35 20 / 25
+	bow - 20 10 / 30 20 / 30
+	mace - 30 30/ 50 50 / 30
+	
+	WEAPONS
+	weaponName enum.WEAPONS
+	L.ATK power
+	L.ATK stamina
+	H.ATK power
+	H.ATK stamina
