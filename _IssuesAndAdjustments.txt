@@ -46,3 +46,9 @@ current issues:
 -if you enter the item menu you will always be in the item menu when it rotates back to you
 -if you enter the name of the enemy instead of a number, instead of attacking the first instance of an enemy it reads as unaccepted and proceeds to enemy turn
 
+
+
+
+
+move enemy choices stuff to it's own method & add efficency
+adjust random ranges globaly

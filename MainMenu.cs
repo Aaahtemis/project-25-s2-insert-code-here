@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CombatSystem;
 
 namespace TeamCSFile
 {
@@ -45,8 +46,10 @@ namespace TeamCSFile
                                   "4  Go to Checkout\n" +
                                   "0  Exit The Menu");
 
+
                 //userInput = Convert.ToInt32(Console.ReadLine());
                 userInput = InputCheck(Console.ReadLine().Trim());
+
                 switch (userInput)
                 {
                     case 1:
@@ -56,8 +59,8 @@ namespace TeamCSFile
 
                     case 2:
                         //Room Selection
-                        inMenu = false;
-                        Program.RoomSelection();
+                        //inMenu = false; - this breaks the return from room selection
+                        RoomSelector.RoomSelection();
                         break;
                     case 3:
                         // Check your inventory
@@ -108,8 +111,8 @@ namespace TeamCSFile
             Console.WriteLine("You sit down at a chair and rest for a while");
 
             Thread.Sleep(1000);
-            Program.Health = 100;
-            Program.Stamina = 100;
+            Combat.health = 100;
+            Combat.stamina = 100;
             for (int i = 0; i < 10; i++)
             {
                 Console.SetCursorPosition(10 + i, 1);
@@ -119,7 +122,7 @@ namespace TeamCSFile
             }
 
             Console.SetCursorPosition(10, 25);
-            Console.WriteLine($"\nYour Health: {Program.Health} and Stamina: {Program.Stamina} - is restored");
+            Console.WriteLine($"\nYour Health: {Combat.health} and Stamina: {Combat.stamina} - is restored");
             Thread.Sleep(5000);
 
 

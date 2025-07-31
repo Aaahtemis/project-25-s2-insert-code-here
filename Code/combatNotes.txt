@@ -1,0 +1,115 @@
+
+
+
+issues with combat at the moment.
+
+	repeating code.
+	bulky switch statements
+	repeating but storing decisions elsewhere
+	clearing screen more often than it should
+	combat ui is bulky
+	no separation using methods within combat
+
+to fix:
+	
+	separate different functions into methods
+	add enemies to array rather than added/removed upon 0 hp
+	replace all text with centre-aligned method 
+	replace all try/catch methods with while int.TryParse methods
+	
+	
+	singular input variable?
+	
+	user input? global?
+
+	turns and efficient looping
+
+
+
+	exiting:
+		Run - player turn
+		Player loses all health - enemy turn
+		Enemies are defeated - player turn
+		1. then 2. repeat.
+
+
+
+
+working:
+	between 1 and 30 responses in a switch statement. in order - 
+
+	1:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	2:
+		{onfield[i]} is rethinking its career path.
+	3:
+		{onfield[i]} is thinking about the Roman Empire.
+	4:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	5:
+		{onfield[i]} is silently judging you.
+	6:
+		{onfield[i]} pulled out its phone and started playing Subway Surfers.
+	7:
+		{onfield[i]} asked you if you believe in our lord, who art in Heaven.
+	8:
+		{onfield[i]} attempted to explain insider trading to you.
+	9:
+		{onfield[i]} asked you if your refrigerator is running.
+	10:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	11:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	12:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	13:
+		{onfield[i]} is beginning to Morb.
+	14:
+		{onfield[i]} wants to get off Mr. Bones' wild ride.
+	15:
+		{onfield[i]} loves legitimate theatre.
+	16:
+		{onfield[i]} asked you to spell ICUP.
+	17:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	18:
+		{onfield[i]} is suffering from Jaundice.
+	19:
+		{onfield[i]} did an impression of construction equipment.
+	20:
+		{onfield[i]} says: What's the deal with airline food?
+	21:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	22:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	23:
+		{onfield[i]} thought we were having Steamed Clams.
+	24:
+		{onfield[i]} asked you to play Wonderwall.
+	25:
+		{onfield[i]} took a swig from a brown paper bag.
+	26:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	27:
+		{onfield[i]} knows what you did.
+	28:
+		{onfield[i]} pulled your IP address.
+	29:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+	30:
+		attacked
+		if guarding : ..but you withstood the attack and sustained no damage! // attacked
+		
+
+	
+

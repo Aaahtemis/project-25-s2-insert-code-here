@@ -1,2 +1,10 @@
-move enemy choices stuff to it's own method & add efficency
-adjust random ranges globaly
+
+Does it WORK? 
+Is the code easy to read?
+Does the code contain comments?
+Do the variables follow naming conventions?
+Is the code repeated?
+Are the methods well named and not bloated?
+Does the code fulfill what is described in the task?
+
+
