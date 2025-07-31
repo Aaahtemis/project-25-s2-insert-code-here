@@ -49,18 +49,21 @@ namespace TeamCSFile
                             return "Clothing";
 
                         case 2:
-                            Program.Room = 2;
+                        selectAnims(num);
+                        Program.Room = 2;
                         Program.Electronics();
                             Console.WriteLine("This is Electronics\n" + "Press 0 to exit");
                             return "Electronics";
 
                         case 3:
+                        selectAnims(num);
                         Program.Room = 3;
                         Program.Toys();
                             Console.WriteLine("This is Toys\n" + "Press 0 to exit");
                             return "Toys";
 
                         case 4:
+                        selectAnims(num);
                         Program.Room = 4;
                         Program.Camping();
                             Console.WriteLine("This is Camping\n" + "Press 0 to exit");
