@@ -87,7 +87,7 @@ namespace CombatSystem
         {
             bool inCombat = true;
 
-            for (int i = 0; i < 3 /*introAnim.Length*/; i++)            // flashing lights intro animation
+            for (int i = 0; i < introAnim.Length; i++)            // flashing lights intro animation
             {
                 Console.Clear();
                 Console.BackgroundColor = introAnim[i];
@@ -105,7 +105,7 @@ namespace CombatSystem
             {
                 for (int i = 0; i < enemyCount; i++)
                 {
-                    string chosenName = enemyNames[roomNum - 1, enemyNames.GetLength(roomNum - 1) - 1];
+                    string chosenName = enemyNames[roomNum - 1, rand.Next(0, enemyNames.GetLength(1))];
                     onfield[i].name = chosenName + " " + (i + 1);
                     onfield[i].health = 100;
 
@@ -139,9 +139,6 @@ namespace CombatSystem
 
                 Format.DisplayResponse();
                 Thread.Sleep(2500);
-                Console.Clear();
-
-
 
 
             turns++; // increment turn to allow player to act first
@@ -197,11 +194,19 @@ namespace CombatSystem
                 {
                     used = true;
 
+                    Format.AddToResponse($"You use one of your {inventory[Player.input - 1].name}s");
+
                     switch (Player.input)
                     {
                         case 1:                     // health potions
                             healthChanged = true;
                             amountChanged += 25;
+                            health += amountChanged;
+                            if (health > 100)
+                            {
+                                health = 100;
+                            }
+                            Format.AddToResponse($"You gain {amountChanged} Health. You have now have {health}HP.Enter to continue");
                             break;
                         case 2:
                             amountChanged += 25;
@@ -213,6 +218,12 @@ namespace CombatSystem
 
                         case 4:                     // stamina potions
                             amountChanged += 25;
+                            stamina += amountChanged;
+                            if (stamina > 100)
+                            {
+                                stamina = 100;
+                            }
+                            Format.AddToResponse($"You gain {amountChanged} Stamina. You have now have {stamina}STM.");
                             break;
                         case 5:
                             amountChanged += 25;
@@ -225,52 +236,27 @@ namespace CombatSystem
                             used = false; break;
                     }
 
+                    turns++; // increment turns to allow enemies to attack next turn
+
                     inventory[Player.input - 1].amount--;
+                } 
+                else
+                {
+                    Format.AddToResponse("You don't have enough of that item");
                 }
-            } else
+            } 
+            else
             {
                 Format.AddToResponse("You exit the inventory menu without using an item.");
                 Format.DisplayResponse();
+                Thread.Sleep(1500);
                 return;
-            }
-
-
-            if (used)
-            {
-
-                Format.AddToResponse($"You use one of your {inventory[Player.input - 1].name}s");
-                if (healthChanged)
-                {
-                    health += amountChanged;
-                    if (health > 100)
-                    {
-                        health = 100;
-                    }
-                    Format.AddToResponse($"You gain {amountChanged} Health. You have now have {health}HP.Enter to continue");
-                }
-                else
-                {
-                    stamina += amountChanged;
-                    if (stamina > 100)
-                    {
-                        stamina = 100;
-                    }
-                    Format.AddToResponse($"You gain {amountChanged} Stamina. You have now have {stamina}STM.");
-                }
-
-                turns++; // increment turns to allow enemies to attack next turn
-
-            }
-            else
-            {
-                Format.AddToResponse("You don't have enough of that item");
             }
 
 
             Format.AddToResponse("Enter to continue");
             Format.DisplayResponse();
             Console.ReadLine();
-
         }
 
 
@@ -465,7 +451,16 @@ namespace CombatSystem
                 Format.DisplayResponse();
                 Thread.Sleep(2000);
 
-                if (onfield.Length == 0) // if all enemies are defeated
+                bool allDefeated = true; // variable to check if all enemies are defeated
+                for (int i = 0; i < onfield.Length; i++)
+                {
+                    if (onfield[i].health > 0) // if any enemy is alive
+                    {
+                        allDefeated = false;
+                        break;
+                    }
+                }
+                if (allDefeated) // if all enemies are defeated
                 {
                     Format.AddToResponse("You have defeated all enemies!");
                     Format.DisplayResponse();
@@ -473,10 +468,11 @@ namespace CombatSystem
                     return false; // combat ends if all enemies are defeated
                     
                 }
-
             }
 
 
+
+            // non-combative actions
             else if (Player.input == 2)  // if Items chosen
             {
                 ShowInventory();
@@ -542,7 +538,7 @@ namespace CombatSystem
                     if (guarding)
                     {
                         Thread.Sleep(500);
-                        Format.AddToResponse("But since you're guarding, you take /blue 0 /reset damage!");
+                        Format.AddToResponse("But since you are guarding, you take /blue 0 /reset damage!");
                     }
                     else
                     {
@@ -553,10 +549,6 @@ namespace CombatSystem
                 Format.DisplayResponse();
                 Thread.Sleep(2500);
 
-                if (!heavy)
-                {
-                    turns++; // increment turns to allow player to attack next turn
-                }
 
                 if (health <= 0)
                 {
@@ -566,6 +558,11 @@ namespace CombatSystem
                     Console.Clear();
                     return false; // combat ends if player dies
                 }
+            }
+
+            if (!heavy)
+            {
+                turns++; // increment turns to allow player to attack next turn
             }
 
             guarding = false; // resets guard after turn
