@@ -33,25 +33,25 @@ namespace CombatSystem
 
         static string[] enemyIdles =
             {
-                "{onfield[i]} is rethinking its career path.",
-                "{onfield[i]} is thinking about the Roman Empire.",
-                "{onfield[i]} is silently judging you.",
-                "{onfield[i]} pulled out its phone and started playing Subway Surfers.",
-                "{onfield[i]} asked you if you believe in our lord, who art in Heaven.",
-                "{onfield[i]} attempted to explain insider trading to you.",
-                "{onfield[i]} asked you if your refrigerator is running.",
-                "{onfield[i]} is beginning to Morb.",
-                "{onfield[i]} wants to get off Mr. Bones' wild ride.",
-                "{onfield[i]} loves legitimate theatre.",
-                "{onfield[i]} asked you to spell ICUP.",
-                "{onfield[i]} is suffering from Jaundice.",
-                "{onfield[i]} did an impression of construction equipment.",
-                "{onfield[i]} says: What's the deal with airline food?",
-                "{onfield[i]} thought we were having Steamed Clams.",
-                "{onfield[i]} asked you to play Wonderwall.",
-                "{onfield[i]} took a swig from a brown paper bag.",
-                "{onfield[i]} knows what you did.",
-                "{onfield[i]} pulled your IP address."
+                " is rethinking its career path.",
+                " is thinking about the Roman Empire.",
+                " is silently judging you.",
+                " pulled out its phone and started playing Subway Surfers.",
+                " asked you if you believe in our lord, who art in Heaven.",
+                " attempted to explain insider trading to you.",
+                " asked you if your refrigerator is running.",
+                " is beginning to Morb.",
+                " wants to get off Mr. Bones' wild ride.",
+                " loves legitimate theatre.",
+                " asked you to spell ICUP.",
+                " is suffering from Jaundice.",
+                " did an impression of construction equipment.",
+                " says: What's the deal with airline food?",
+                " thought we were having Steamed Clams.",
+                " asked you to play Wonderwall.",
+                " took a swig from a brown paper bag.",
+                " knows what you did.",
+                " pulled your IP address."
             };
 
 
@@ -62,8 +62,8 @@ namespace CombatSystem
         //"4  Camping\n" +
 
 
-        static int health = 100;
-        static int stamina = 100;
+        public static int health = 100;
+        public static int stamina = 100;
 
 
         static (int power, int stamina) lightAttack = (20, 10), heavyAttack = (40, 15); // power and stamina cost for light and heavy attacks respectively
@@ -105,8 +105,8 @@ namespace CombatSystem
             {
                 for (int i = 0; i < enemyCount; i++)
                 {
-                    string chosenName = enemyNames[roomNum - 1, 0];
-                    onfield[i].name = chosenName;
+                    string chosenName = enemyNames[roomNum - 1, rand.Next(0, enemyNames.GetLength(1))];
+                    onfield[i].name = chosenName + " " + (i + 1);
                     onfield[i].health = 100;
 
                     // rand.Next(0, enemyNames.GetLength( roomNum - 1))
@@ -124,24 +124,21 @@ namespace CombatSystem
 
             {
                 case 1:
-                    Format.AddToResponse($"A wild {onfield[0]} approaches!");
+                    Format.AddToResponse($"A wild {onfield[0].name} approaches!");
                     break;
 
                 case 2:
-                    Format.AddToResponse($"You are stopped by {onfield[0]} and {onfield[1]}.");
+                    Format.AddToResponse($"You are stopped by {onfield[0].name} and {onfield[1].name}.");
                     break;
 
                 case 3:
-                    Format.AddToResponse($"You run into {onfield[0]}, {onfield[1]} and {onfield[2]}");
+                    Format.AddToResponse($"You run into {onfield[0].name}, {onfield[1].name} and {onfield[2].name}");
                     break;
             }
 
 
                 Format.DisplayResponse();
                 Thread.Sleep(2500);
-                Console.Clear();
-
-
 
 
             turns++; // increment turn to allow player to act first
@@ -170,17 +167,18 @@ namespace CombatSystem
         /// </summary>
         static void ShowInventory()
         {
-            Console.Clear();
+            BuildHUD();
+            Format.AddToResponse($"Enter a number to use an item :)", 0 , 1);
 
             for (int i = 0; i < inventory.Length; i++)
             {
                 if (inventory[i].amount != 0)
                 {
-                    Console.WriteLine($"Enter {i + 1} to use one of your {inventory[i].amount} {inventory[i].name}s.\n");
+                    Format.AddToResponse($"{i + 1} -- {inventory[i].amount} of {inventory[i].name}/s.");
                 }
             }
 
-            Format.AddToResponse("Enter the item you want to do or 0 if you want to exit.");
+            Format.AddToResponse("Enter the item you want to do or 0 if you want to exit.", 2);
             Format.DisplayResponse();
 
             Player.GetInt(3, 0);
@@ -196,11 +194,19 @@ namespace CombatSystem
                 {
                     used = true;
 
+                    Format.AddToResponse($"You use one of your {inventory[Player.input - 1].name}s");
+
                     switch (Player.input)
                     {
                         case 1:                     // health potions
                             healthChanged = true;
                             amountChanged += 25;
+                            health += amountChanged;
+                            if (health > 100)
+                            {
+                                health = 100;
+                            }
+                            Format.AddToResponse($"You gain {amountChanged} Health. You have now have {health}HP.Enter to continue");
                             break;
                         case 2:
                             amountChanged += 25;
@@ -212,6 +218,12 @@ namespace CombatSystem
 
                         case 4:                     // stamina potions
                             amountChanged += 25;
+                            stamina += amountChanged;
+                            if (stamina > 100)
+                            {
+                                stamina = 100;
+                            }
+                            Format.AddToResponse($"You gain {amountChanged} Stamina. You have now have {stamina}STM.");
                             break;
                         case 5:
                             amountChanged += 25;
@@ -224,52 +236,27 @@ namespace CombatSystem
                             used = false; break;
                     }
 
+                    turns++; // increment turns to allow enemies to attack next turn
+
                     inventory[Player.input - 1].amount--;
+                } 
+                else
+                {
+                    Format.AddToResponse("You don't have enough of that item");
                 }
-            } else
+            } 
+            else
             {
                 Format.AddToResponse("You exit the inventory menu without using an item.");
                 Format.DisplayResponse();
+                Thread.Sleep(1500);
                 return;
-            }
-
-
-            if (used)
-            {
-
-                Format.AddToResponse($"You use one of your {inventory[Player.input - 1].name}s");
-                if (healthChanged)
-                {
-                    health += amountChanged;
-                    if (health > 100)
-                    {
-                        health = 100;
-                    }
-                    Format.AddToResponse($"You gain {amountChanged} Health. You have now have {health}HP.Enter to continue");
-                }
-                else
-                {
-                    stamina += amountChanged;
-                    if (stamina > 100)
-                    {
-                        stamina = 100;
-                    }
-                    Format.AddToResponse($"You gain {amountChanged} Health. You have now have {stamina}STM.");
-                }
-
-                turns++; // increment turns to allow enemies to attack next turn
-
-            }
-            else
-            {
-                Format.AddToResponse("You don't have enough of that item");
             }
 
 
             Format.AddToResponse("Enter to continue");
             Format.DisplayResponse();
             Console.ReadLine();
-
         }
 
 
@@ -283,7 +270,6 @@ namespace CombatSystem
             string border = new string('-', 20);
 
 
-            Format.AddToResponse(border);
 
 
             Console.ForegroundColor = ConsoleColor.White;
@@ -296,23 +282,22 @@ namespace CombatSystem
                 if (onfield[i].health > 0) //if enemy is alive
                 {
                     Array.Resize(ref enemyNamesToDisplay, enemyNamesToDisplay.Length + 1);
-                    enemyNamesToDisplay[enemyNamesToDisplay.Length - 1] = onfield[i].name; // add enemy name to array
+                    enemyNamesToDisplay[enemyNamesToDisplay.Length - 1] = (i + 1) + ". " + onfield[i].name; // add enemy name to array
 
                     Array.Resize(ref enemyHealthToDisplay, enemyHealthToDisplay.Length + 1);
-                    enemyHealthToDisplay[enemyHealthToDisplay.Length - 1] = $"/red {onfield[i].health}HP"; // add enemy health to array
+                    enemyHealthToDisplay[enemyHealthToDisplay.Length - 1] = $" /red {onfield[i].health}HP"; // add enemy health to array
                 } 
             }
 
-            Format.AddToResponse("/red ENEMIES\n");
-            Format.AddToResponse(String.Join("\t\t\t", enemyNamesToDisplay));
+
+            Format.AddToResponse(border);
+            Format.AddToResponse("/red ENEMIES", 1);
+            Format.AddToResponse(String.Join("\t\t\t", enemyNamesToDisplay), 1);
             Format.AddToResponse(String.Join("\t\t\t", enemyHealthToDisplay));
 
-
-            Format.AddToResponse("\n\n\n\n\n\n\n\n\n");
-            Format.AddToResponse("/green YOU");
-            Format.AddToResponse($"HP: {health}\t\tSTM: {stamina}");
-            Format.AddToResponse("1. Attack\t\t2. Items\t\t3. Guard (Take no damage for 1 turn, req. 20 STM)\n\n");
-            Format.AddToResponse("\n\n");
+            Format.AddToResponse("/green YOU", 4);
+            Format.AddToResponse($"HP: /green {health}\t\t /reset STM: /blue {stamina}", 1);
+            Format.AddToResponse("1. Attack\t\t2. Items\t\t3. Guard (Take no damage for 1 turn, req. 20 STM)\n\n", 1, 2);
             Format.AddToResponse(border);
 
         }
@@ -333,7 +318,7 @@ namespace CombatSystem
                 Random rand = new Random();
                 BuildHUD();
                 Format.AddToResponse("Select an attack");
-                Format.AddToResponse($"/blue 1. Light Attack ({lightAttack.power} DMG, req. {lightAttack.stamina} STM)\t\t /red 2. Heavy Attack ({heavyAttack.power} DMG, /reset req {heavyAttack.stamina} STM)\t\t /yellow 3. Hail Mary (Do I feel lucky?)");
+                Format.AddToResponse($"/blue 1. Light Attack ({lightAttack.power} DMG, req. {lightAttack.stamina} STM, 1 TURN)\t\t /red 2. Heavy Attack ({heavyAttack.power} DMG, /reset req {heavyAttack.stamina} STM, 2 TURNs)\t\t /yellow 3. Hail Mary (Do I feel lucky?) req. (1 TURN)");
                 Format.DisplayResponse(false);
 
                 Player.GetInt();
@@ -348,12 +333,14 @@ namespace CombatSystem
 
                 if (attackChoice == 1 || attackChoice == 2)    // if Attack chosen
                 {
-
+                    BuildHUD();
                     Format.AddToResponse("Select a target:", 2, 2);
                     Format.DisplayResponse(false, false);
 
                     Player.GetInt(onfield.Length);
                     targetChoice = Player.input; // store target choice
+
+
 
                     switch (attackChoice)
                     {
@@ -381,6 +368,7 @@ namespace CombatSystem
                             break;
                     }
 
+
                 }
                 
 
@@ -406,7 +394,7 @@ namespace CombatSystem
                     if (roll1 == roll2 && roll1 == roll3)
                     {
                         damageDealt = 100;
-                        Format.AddToResponse("/green Today is your lucky day");
+                        Format.AddToResponse(" /green Today is your lucky day");
                     }
                     else
                     {
@@ -421,20 +409,21 @@ namespace CombatSystem
                 {
                     bool targetDefeated = false; 
 
-                    if (onfield.Length < targetChoice - 1 && targetChoice > 0 && attackChoice != 3) // check if enemy exists   ---- POTENTIAL ISSUE WITH PLAYER INPUT MAX ARRAY REF ************
+                    if (onfield.Length > targetChoice - 1 && targetChoice > 0 && attackChoice != 3) // check if enemy exists   ---- POTENTIAL ISSUE WITH PLAYER INPUT MAX ARRAY REF ************
                     {
-                        onfield[Player.input - 1].health = onfield[Player.input + 1].health - damageDealt;
+                        onfield[targetChoice - 1].health = onfield[targetChoice - 1].health - damageDealt;
                         stamina -= staminaDrained; // drain stamina based on attack choice
                         if (onfield[targetChoice-1].health < 0) // if enemy health is below 0, set to 0
                         {
                             onfield[targetChoice - 1].health = 0;
                             targetDefeated = true;
                         }
-                        Format.AddToResponse($"You attack {onfield[targetChoice - 1]} for {damageDealt} damage! It has {onfield[targetChoice - 1].health} HP left.");
+                        Format.AddToResponse($" /blue You attack {onfield[targetChoice - 1]} for {damageDealt} damage! It has {onfield[targetChoice - 1].health} HP left.");
                         if (targetDefeated)
                         {
-                            Format.AddToResponse($"{onfield[targetChoice - 1]} has been defeated!");
+                            Format.AddToResponse($" /green {onfield[targetChoice - 1]} has been defeated!");
                         }
+
                         turns++; // increment turns to allow enemies to attack next turn
                     }
                     else if (attackChoice == 3)
@@ -453,13 +442,25 @@ namespace CombatSystem
                                 Format.AddToResponse($"{onfield[targetChoice - 1]} has been defeated!");
                             }
                         }
+                    } else
+                    {
+                        Format.AddToResponse($"You chose {targetChoice}. This target doesn't exist on the field");
                     }
                 }
 
                 Format.DisplayResponse();
                 Thread.Sleep(2000);
 
-                if (onfield.Length == 0) // if all enemies are defeated
+                bool allDefeated = true; // variable to check if all enemies are defeated
+                for (int i = 0; i < onfield.Length; i++)
+                {
+                    if (onfield[i].health > 0) // if any enemy is alive
+                    {
+                        allDefeated = false;
+                        break;
+                    }
+                }
+                if (allDefeated) // if all enemies are defeated
                 {
                     Format.AddToResponse("You have defeated all enemies!");
                     Format.DisplayResponse();
@@ -467,10 +468,11 @@ namespace CombatSystem
                     return false; // combat ends if all enemies are defeated
                     
                 }
-
             }
 
 
+
+            // non-combative actions
             else if (Player.input == 2)  // if Items chosen
             {
                 ShowInventory();
@@ -517,7 +519,7 @@ namespace CombatSystem
                 {
                     // enemy idle
                     Console.Clear();
-                    Format.AddToResponse($"" + enemyIdles[rand.Next(enemyIdles.Length)]);
+                    Format.AddToResponse($" /red {onfield[i].name} /reset {enemyIdles[rand.Next(enemyIdles.Length)]}");
                 } 
                 else
                 {
@@ -530,26 +532,23 @@ namespace CombatSystem
                     Console.Clear();
 
                     int damageDealt = rand.Next(5, 21);
-                    Format.AddToResponse($"{onfield[i]} attacks for {damageDealt} damage!");
 
+                    Format.AddToResponse($"{onfield[i].name} attacks for {damageDealt} damage!");
 
                     if (guarding)
                     {
-                        Format.AddToResponse($"{onfield[i]} attacks for {damageDealt} damage!");
+                        Thread.Sleep(500);
+                        Format.AddToResponse("But since you are guarding, you take /blue 0 /reset damage!");
                     }
                     else
                     {
-                        Player.health -= damageDealt;
+                        health -= damageDealt;
                     }
                 }
 
                 Format.DisplayResponse();
                 Thread.Sleep(2500);
 
-                if (!heavy)
-                {
-                    turns++; // increment turns to allow player to attack next turn
-                }
 
                 if (health <= 0)
                 {
@@ -557,8 +556,13 @@ namespace CombatSystem
                     Format.DisplayResponse();
                     Thread.Sleep(5000);
                     Console.Clear();
-                     return false; // combat ends if player dies
+                    return false; // combat ends if player dies
                 }
+            }
+
+            if (!heavy)
+            {
+                turns++; // increment turns to allow player to attack next turn
             }
 
             guarding = false; // resets guard after turn
