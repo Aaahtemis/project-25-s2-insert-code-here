@@ -10,22 +10,29 @@ public static class Format
 {
     public static string[] response = new string[0];
 
-    public static void AddToResponse(string input, int padUp = 0, int padDown = 0)
+
+    
+
+
+    public static void AddToResponse(string input = "", int padUp = 0, int padDown = 0)
     {
         for (int i = 0; i < padUp; i++)
         {
-            input = "\n" + input;
+            AddBlank();
         }
-        for (int i = 0; i < padDown; i++)
-        {
-            input = input + "\n";
-        }
-
+        
         Array.Resize(ref response, response.Length + 1);
         response[response.Length - 1] = input;
 
-        
-
+        for (int i = 0; i < padDown; i++)
+        {
+            AddBlank();
+        }
+    }
+    static void AddBlank()
+    {
+        Array.Resize(ref response, response.Length + 1);
+        response[response.Length - 1] = "";
     }
 
     public static void DisplayResponse(bool isDelayed = false, bool clear = true)
@@ -40,6 +47,12 @@ public static class Format
         {
             for (int i = 0; i < response.Length; i++)
             {
+                if (WindowCentre().y + (i - response.Length / 2) < 0 || WindowCentre().x - response[i].Length / 2 < 0)
+                {
+                    Console.WriteLine("Invalid write location");
+                    continue;
+                }
+
                 Console.SetCursorPosition(WindowCentre().x - response[i].Length / 2, WindowCentre().y + (i - response.Length / 2));
                 writeSpecial(response[i]);
                 Console.WriteLine();
@@ -119,11 +132,13 @@ public static class Format
 
 public static class Player
 {
-    public const int maxHealth = 100;
-    public static int health = maxHealth;
 
-    public const int maxStamina = 100;
-    public static int stamina = maxStamina;
+    //      removed health for consistency within combat.
+    //public const int maxHealth = 100;
+    //public static int health = maxHealth;
+
+    //public const int maxStamina = 100;
+    //public static int stamina = maxStamina;
 
 
 
@@ -132,6 +147,7 @@ public static class Player
 
     public static void GetInt(int max = 3, int min = 1)
     {
+        input = -1;
         while(!Int32.TryParse(Console.ReadLine(), out input) && input >= min && input <= max)
         {
             Format.AddToResponse(input + "is not a valid input.");
