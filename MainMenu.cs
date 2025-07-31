@@ -61,7 +61,7 @@ namespace TeamCSFile
                         break;
                     case 3:
                         // Check your inventory
-                        Inventory();
+                        MMInventory.theInventory();
                         break;
                     case 4:
                         // Go to Checkout
@@ -159,18 +159,6 @@ namespace TeamCSFile
 
         }
 
-        public static void Inventory()
-        {
-            Console.Clear();
-
-            for (int i = 0; i < Program.InventoryAmount.Length; i++)
-            {
-                Console.WriteLine($"You have {Program.InventoryAmount[i]} {Program.InventoryName[i]}s.");
-            }
-            Console.WriteLine("Press enter to continue.");
-            Console.ReadLine();
-
-        }
 
 
         public static bool Checkout()
