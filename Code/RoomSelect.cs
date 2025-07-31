@@ -70,6 +70,9 @@ namespace TeamCSFile
                         Program.Camping();
                             Console.WriteLine("This is Camping\n" + "Press 0 to exit");
                             return "Camping";
+                        case 5:
+                            Program.CheckProgress();
+                            return "";
 
                         case 0:
 
