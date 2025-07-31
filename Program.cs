@@ -57,81 +57,6 @@ namespace TeamCSFile
             sr.Close();
             
         }
-        
-
-            
-
-            
-            public static string RoomSelection()
-            {
-                int num = 0;
-                bool inMenu = true;
-
-                do
-                {
-                    Console.Clear();
-
-                    Console.WriteLine("Main Menu\n" + "Please select from the numbers below\n");
-                    Console.WriteLine("1  Clothing\n" +
-                                      "2  Electronics\n" +
-                                      "3  Toys\n" +
-                                      "4  Camping\n" +
-                                      "0  Back to the menu");
-
-                    try
-                    {
-                        num = Convert.ToInt32(Console.ReadLine());
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Huh");
-                        Console.ReadLine();
-                    }
-
-                    switch (num)
-                    {
-                        case 1:
-                            Room = 1;
-                            Clothing();
-                            Console.WriteLine("This is Clothing\n" + "Press 0 to exit");
-                            return "Clothing";
-
-                        case 2:
-                            Room = 2;
-                            Electronics();
-                            Console.WriteLine("This is Electronics\n" + "Press 0 to exit");
-                            return "Electronics";
-
-                        case 3:
-                            Room = 3;
-                            Toys();
-                            Console.WriteLine("This is Toys\n" + "Press 0 to exit");
-                            return "Toys";
-
-                        case 4:
-                            Room = 4;
-                            Camping();
-                            Console.WriteLine("This is Camping\n" + "Press 0 to exit");
-                            return "Camping";
-
-                        case 0:
-
-                            inMenu = false;
-                            return "Exiting";
-                        default:
-                            Console.WriteLine("Invalid Input. Please keep it between 0-4");
-                            Console.ReadLine();
-                            return "Invalid";
-
-                    }
-
-                } while (inMenu);
-
-
-            }
-
-        
-
         static void Inventory()
         {
             Console.Clear();
@@ -145,7 +70,7 @@ namespace TeamCSFile
         }
 
 
-        static void Clothing()
+        public static void Clothing()
         {
             Console.Clear();
             Console.WriteLine($"You enter the Clothing section in order to find the {InventoryName[0]}.");
@@ -290,7 +215,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             }
         }
 
-        static void Camping()
+        public static void Camping()
         {
             bool inCampingRoom = true, gambleWin = false; // Loop control variables
             int spinCount = 0, spin1, spin2, spin3; // Variables for controlling the gambling game
@@ -444,7 +369,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             return result;
         }
 
-        static void Toys()
+        public static void Toys()
         {
 
             int one6 = rand.Next(0 , Combat.inventory.Length);
@@ -582,7 +507,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
 
         }
 
-        static void Electronics()
+        public static void Electronics()
         {
 
             bool sectionActive = true, gotItem = false; // keeps the section active until the player leaves
@@ -863,5 +788,29 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             }
         }
         
+        public static void CheckProgress()
+        {
+            Console.Clear();
+            for (int i = 0; i < InventoryName.Length; i++)
+            {
+                
+                if (InventoryAmount[i] >= 1)
+                {
+                    Console.Write($"{InventoryName[i]}:");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" COLLECTED\n");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write($"{InventoryName[i]}:");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" NOT COLLECTED\n");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("\n\n\nPress any key to return to room selection...");
+            Console.ReadKey(true);
+        }
     }
 }
