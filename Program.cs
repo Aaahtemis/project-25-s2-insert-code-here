@@ -68,7 +68,7 @@ namespace TeamCSFile
             
 
             
-            public static string RoomSelection()
+            public static void RoomSelection()
             {
                 int num = 0;
                 bool inMenu = true;
@@ -82,6 +82,7 @@ namespace TeamCSFile
                                       "2  Electronics\n" +
                                       "3  Toys\n" +
                                       "4  Camping\n" +
+                                      "5  Check Progress\n" +
                                       "0  Back to the menu");
 
                     try
@@ -100,34 +101,35 @@ namespace TeamCSFile
                             Room = 1;
                             Clothing();
                             Console.WriteLine("This is Clothing\n" + "Press 0 to exit");
-                            return "Clothing";
+                            break;
 
                         case 2:
                             Room = 2;
                             Electronics();
                             Console.WriteLine("This is Electronics\n" + "Press 0 to exit");
-                            return "Electronics";
+                            break;
 
                         case 3:
                             Room = 3;
                             Toys();
                             Console.WriteLine("This is Toys\n" + "Press 0 to exit");
-                            return "Toys";
+                            break;
 
                         case 4:
                             Room = 4;
                             Camping();
                             Console.WriteLine("This is Camping\n" + "Press 0 to exit");
-                            return "Camping";
-
+                            break;
+                        case 5:
+                            CheckProgress();
+                            break;
                         case 0:
-
                             inMenu = false;
-                            return "Exiting";
+                            break;
                         default:
                             Console.WriteLine("Invalid Input. Please keep it between 0-4");
                             Console.ReadLine();
-                            return "Invalid";
+                            break;
 
                     }
 
@@ -2244,5 +2246,29 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             }
         }
         
+        public static void CheckProgress()
+        {
+            Console.Clear();
+            for (int i = 0; i < InventoryName.Length; i++)
+            {
+                
+                if (InventoryAmount[i] >= 1)
+                {
+                    Console.Write($"{InventoryName[i]}:");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" COLLECTED\n");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write($"{InventoryName[i]}:");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" NOT COLLECTED\n");
+                    Console.ResetColor();
+                }
+            }
+            Console.WriteLine("\n\n\nPress any key to return to room selection...");
+            Console.ReadKey(true);
+        }
     }
 }
