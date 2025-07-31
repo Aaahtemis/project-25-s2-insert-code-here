@@ -45,8 +45,8 @@ namespace TeamCSFile
                                   "4  Go to Checkout\n" +
                                   "0  Exit The Menu");
 
-                userInput = Convert.ToInt32(Console.ReadLine());
-
+                //userInput = Convert.ToInt32(Console.ReadLine());
+                userInput = InputCheck(Console.ReadLine().Trim());
                 switch (userInput)
                 {
                     case 1:
@@ -142,7 +142,7 @@ namespace TeamCSFile
                 if (playerInput == 'y')
                 {
                     Environment.Exit(0);
-                    
+
                 }
                 else if (playerInput == 'n')
                 {
@@ -195,9 +195,20 @@ namespace TeamCSFile
                 return true;
             }
 
+        }
 
+        public static int InputCheck(string input)
+        {
+            bool convertable = int.TryParse(input, out int result);
+
+            if (convertable == true)
+            {
+                return result;
+            }
+            else { return 0; }
 
         }
+
     }
 }
         
