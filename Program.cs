@@ -1526,7 +1526,7 @@ namespace TeamCSFile
 
         }
 
-        static void Clothing()
+        public static void Clothing()
         {
             Console.Clear();
             Console.WriteLine($"You enter the Clothing section in order to find the {InventoryName[0]}.");
@@ -1671,7 +1671,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             }
         }
 
-        static void Camping()
+        public static void Camping()
         {
             bool inCampingRoom = true, gambleWin = false; // Loop control variables
             int spinCount = 0, spin1, spin2, spin3; // Variables for controlling the gambling game
@@ -1825,7 +1825,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
             return result;
         }
 
-        static void Toys()
+        public static void Toys()
         {
 
             int one6 = rand.Next(0 , CombatInventoryAmount.Length);
@@ -1963,7 +1963,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
 
         }
 
-        static void Electronics()
+        public static void Electronics()
         {
 
             bool sectionActive = true, gotItem = false; // keeps the section active until the player leaves

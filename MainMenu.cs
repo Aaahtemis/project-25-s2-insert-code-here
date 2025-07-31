@@ -56,8 +56,8 @@ namespace TeamCSFile
 
                     case 2:
                         //Room Selection
-                        inMenu = false;
-                        Program.RoomSelection();
+                        //inMenu = false; - this breaks the return from room selection
+                        RoomSelector.RoomSelection();
                         break;
                     case 3:
                         // Check your inventory
