@@ -20,6 +20,7 @@ namespace TeamCSFile
                     Console.Clear();
 
                 Console.WriteLine("Main Menu\n" + "Please select from the numbers below\n");
+                sr = new StreamReader($@"room-selector-interface.txt");
                 while (!sr.EndOfStream)//prints the new menu
                 {
                     aline = sr.ReadLine();
