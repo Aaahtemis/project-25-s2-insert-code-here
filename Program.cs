@@ -136,19 +136,6 @@ namespace TeamCSFile
 
             }
 
-        
-
-        static void Inventory()
-        {
-            Console.Clear();
-            for (int i = 0; i < InventoryAmount.Length; i++)
-            {
-                Console.WriteLine($"You have {InventoryAmount[i]} {InventoryName[i]}s.");
-            }
-            Console.WriteLine("Press enter to continue.");
-            Console.ReadLine();
-
-        }
 
         static void CombatInventory()
         {
@@ -1563,7 +1550,7 @@ Do you:
                         if (temp == 4)
                         {
                             Console.WriteLine($"And found a {InventoryName[0]}!");
-                            InventoryAmount[0]++;
+                            MMInventory.mmInventoryItems[0].amountOf++;
                             Console.WriteLine("Enter to continue.");
                             Console.ReadLine();
                         }
@@ -1630,7 +1617,7 @@ Do you:
                         {
                             Console.WriteLine($"And succeed!");
                             Console.WriteLine($"You got a {InventoryName[0]}!");
-                            InventoryAmount[0]++;
+                            MMInventory.mmInventoryItems[0].amountOf++;
                             Console.ReadLine();
                         }
                         if (temp == 3)
@@ -1651,7 +1638,7 @@ You notice a crumpled post-it note on the floor with what looks like it could be
                         Console.WriteLine(@"upon entering the code the case springs open so violently you barely get out of the way.
 amongst the dramitic fog now leaking from it's sundered form you spot the very item you came for");
                         Console.WriteLine($"You got a {InventoryName[0]}!");
-                        InventoryAmount[0]++;
+                        MMInventory.mmInventoryItems[0].amountOf++;
                         Console.WriteLine($"But so caught up in collecting the {InventoryName[0]}, you fail to spot the enemy behind you.");
                         Console.ReadLine();
                         Combat();
@@ -1779,7 +1766,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                         Console.WriteLine("\nYou hear a mechanism click as the slot machine moves to reveal a hidden passage through the dam.");
                         Thread.Sleep(2000);
                         Console.WriteLine("\nYou quickly grab the Yard Chair and make a beeline back to the entrance before any more chicanery can occur.");
-                        InventoryAmount[3]++; // Adds 1 camping chair to players inventory
+                        MMInventory.mmInventoryItems[3].amountOf++; // Adds 1 camping chair to players inventory
                         Thread.Sleep(2000);
                         Console.Clear();
                         gambleWin = true; // moves the user out of the gambling loop
@@ -1931,7 +1918,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                     if (answer.Contains("remote") || answer.Contains("car"))
                     {
                         Console.WriteLine("Jack winks and tosses you the Remote Controlled Car.");
-                        InventoryAmount[2]++;
+                        MMInventory.mmInventoryItems[2].amountOf++;
                         gotItem = true;
                        
                     }
@@ -1949,7 +1936,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                 Console.WriteLine("You approach a dusty, eerie chest. It creaks open on its own...");
                 StartCombat();
                 Console.WriteLine($"Inside, you find the {InventoryName[2]} gleaming beneath some old plush toys.");
-                InventoryAmount[2]++;
+                MMInventory.mmInventoryItems[2].amountOf++;
                 gotItem = true;
 
             }
@@ -2119,7 +2106,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                         Console.WriteLine("Your such a nice young person. Says the granny as she walks away\n");
                         Thread.Sleep(2500);
 
-                        InventoryAmount[1] += 1;
+                        MMInventory.mmInventoryItems[1].amountOf+=1;
                         Console.WriteLine("Item acquired! You successfully found what you were looking for.");
                         gotItem = true;
 
@@ -2205,7 +2192,7 @@ amongst the dramitic fog now leaking from it's sundered form you spot the very i
                         Console.WriteLine("“Take your prize, clever one… but beware. The store watches those who see too much.”\n");
                         Thread.Sleep(2000);
 
-                        InventoryAmount[1] += 1;
+                        MMInventory.mmInventoryItems[1].amountOf += 1;
                         Console.WriteLine($"Item acquired! You successfully found what you were looking for.\n And as a bonus you got a {CombatInventoryName[one6]}");
                         gotItem = true;
 
