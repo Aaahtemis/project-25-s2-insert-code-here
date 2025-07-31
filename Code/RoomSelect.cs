@@ -12,7 +12,7 @@ namespace TeamCSFile
         public static StreamReader sr = new StreamReader($@"room-selector-interface.txt");
         public static string RoomSelection()
             {
-                int num = 0;
+                int inputNum = 0;
                 bool inMenu = true;
             string aline;
                 do
@@ -28,10 +28,10 @@ namespace TeamCSFile
                 sr.Close();
 
 
-
+                //input validation
                     try
                     {
-                        num = Convert.ToInt32(Console.ReadLine());
+                        inputNum = Convert.ToInt32(Console.ReadLine());
                     }
                     catch (Exception)
                     {
@@ -39,31 +39,32 @@ namespace TeamCSFile
                         Console.ReadLine();
                     }
 
-                    switch (num)
+                //selection cases
+                    switch (inputNum)
                     {
                         case 1:
-                            selectAnims(num);
+                            selectAnims(inputNum);
                             Program.Room = 1;
                             Program.Clothing();
                             Console.WriteLine("This is Clothing\n" + "Press 0 to exit");
                             return "Clothing";
 
                         case 2:
-                        selectAnims(num);
+                        selectAnims(inputNum);
                         Program.Room = 2;
                         Program.Electronics();
                             Console.WriteLine("This is Electronics\n" + "Press 0 to exit");
                             return "Electronics";
 
                         case 3:
-                        selectAnims(num);
+                        selectAnims(inputNum);
                         Program.Room = 3;
                         Program.Toys();
                             Console.WriteLine("This is Toys\n" + "Press 0 to exit");
                             return "Toys";
 
                         case 4:
-                        selectAnims(num);
+                        selectAnims(inputNum);
                         Program.Room = 4;
                         Program.Camping();
                             Console.WriteLine("This is Camping\n" + "Press 0 to exit");
@@ -84,12 +85,12 @@ namespace TeamCSFile
 
 
             }
-        public static void selectAnims(int i)
+        public static void selectAnims(int i) //makes the selected option go white to make selection a little clearer - is a little slow atm, might tweak
         {
             sr = new StreamReader($@"selction highlight\select-{i}.txt");
             Console.Clear();
             string aline;
-            while (!sr.EndOfStream)//prints the new menu
+            while (!sr.EndOfStream)
             {
                 aline = sr.ReadLine();
                 Console.WriteLine(aline);
